@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿悦的AI博主图谱 - 中文AI博主分布</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #030014; color: #e2e8f0; font-family: 'Inter', -apple-system, sans-serif; overflow: hidden; height: 100vh; }
+  #app { display: flex; height: 100vh; }
+
+  /* ---- Sidebar ---- */
+  #sidebar {
+    width: 360px; min-width: 360px;
+    background: rgba(5,6,10,0.82); backdrop-filter: blur(16px);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column; z-index: 10;
+    position: relative; overflow: hidden;
+  }
+  #sidebar-header { padding: 18px 20px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+  #sidebar-header h1 { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px; }
+  #sidebar-header h1 span { color: #818cf8; }
+  #sidebar-header .subtitle { font-size: 11px; color: #64748b; margin-top: 3px; }
+
+  /* --- List Panel (always visible now) --- */
+  #search-box { padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
+  #search-box input {
+    width: 100%; padding: 7px 10px 7px 32px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px; color: #e2e8f0; font-size: 13px; outline: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: 9px center;
+  }
+  #search-box input:focus { border-color: rgba(129,140,248,0.5); }
+
+  #filter-row { padding: 8px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+  .filter-btn {
+    padding: 3px 10px; border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.08); background: transparent;
+    color: #94a3b8; font-size: 11px; cursor: pointer; transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: rgba(255,255,255,0.2); color: #e2e8f0; }
+  .filter-btn.active { background: rgba(129,140,248,0.12); color: #a5b4fc; border-color: rgba(129,140,248,0.3); }
+
+  /* Topic filter area */
+  #topic-area { padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; max-height: 140px; overflow-y: auto; }
+  #topic-area h3 { font-size: 10px; text-transform: uppercase; color: #64748b; margin-bottom: 6px; letter-spacing: 0.3px; }
+  .topic-tag {
+    display: inline-block; padding: 2px 7px; margin: 2px 2px; border-radius: 8px;
+    font-size: 10px; cursor: pointer; transition: all 0.15s;
+    border: 1px solid transparent;
+  }
+  .topic-tag:hover { opacity: 0.85; }
+  .topic-tag.active { border-color: rgba(255,255,255,0.2); }
+  .topic-tag.dimmed { opacity: 0.15; }
+
+  /* Blogger list */
+  #blogger-list {
+    flex: 1; overflow-y: auto; padding: 2px 0;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent;
+  }
+  #blogger-list::-webkit-scrollbar { width: 4px; }
+  #blogger-list::-webkit-scrollbar-track { background: transparent; }
+  #blogger-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .blogger-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 20px; cursor: pointer; transition: background 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .blogger-item:hover { background: rgba(255,255,255,0.03); }
+  .blogger-item.selected { background: rgba(129,140,248,0.08); border-left-color: #818cf8; }
+  .blogger-item .rank {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 600; color: #64748b; flex-shrink: 0;
+  }
+  .blogger-item.selected .rank { background: rgba(129,140,248,0.2); color: #a5b4fc; }
+  .blogger-item .info { flex: 1; min-width: 0; }
+  .blogger-item .bname { font-size: 12px; font-weight: 500; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .blogger-item .bmeta { font-size: 10px; color: #64748b; margin-top: 1px; }
+  .plat-xhs { color: #ff6b8a; font-weight: 500; }
+  .plat-bili { color: #00aeec; font-weight: 500; }
+  .plat-weixin { color: #07c160; font-weight: 500; }
+  .plat-douyin { color: #fe2c55; font-weight: 500; }
+  .plat-zhihu { color: #0066ff; font-weight: 500; }
+  .blogger-item .followers { font-size: 11px; color: #94a3b8; flex-shrink: 0; }
+
+  /* Sidebar footer */
+  #sidebar-footer {
+    flex-shrink: 0; padding: 14px 20px; border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .author-avatar {
+    width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.1); flex-shrink: 0;
+  }
+  .author-info { flex: 1; min-width: 0; }
+  .author-name { font-size: 13px; font-weight: 600; color: #e2e8f0; }
+  .author-label { font-size: 10px; color: #64748b; margin-top: 1px; }
+  .author-xhs-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 6px;
+    background: rgba(255,45,85,0.12); color: #ff6b8a;
+    font-size: 11px; font-weight: 600; text-decoration: none;
+    transition: all 0.2s; border: 1px solid rgba(255,107,138,0.15);
+    flex-shrink: 0; cursor: pointer;
+  }
+  .author-xhs-btn:hover { background: rgba(255,45,85,0.22); color: #ff8fa8; border-color: rgba(255,107,138,0.3); }
+  .author-xhs-btn img { width: 14px; height: 14px; border-radius: 2px; }
+
+  /* Graph */
+  #graph-container { flex: 1; position: relative; overflow: hidden; }
+
+  /* ---- Profile Card (right-side overlay) ---- */
+  #profile-card {
+    position: fixed; top: 16px; right: 16px; z-index: 1000;
+    width: 320px; max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background: rgba(8,9,18,0.94); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
+    display: none; font-size: 13px;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent;
+  }
+  #profile-card::-webkit-scrollbar { width: 4px; }
+  #profile-card::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  #profile-card.active { display: block; pointer-events: auto; }
+
+  .pc-close {
+    position: absolute; top: 10px; right: 14px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(255,255,255,0.06); color: #94a3b8;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 14px; z-index: 2; transition: all 0.15s;
+  }
+  .pc-close:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+  .pc-header { padding: 16px 20px 0; }
+  .pc-header h2 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px; padding-right: 30px; }
+  .pc-plat {
+    display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;
+  }
+  .pc-plat-xhs { background: rgba(255,45,85,0.12); color: #ff6b8a; }
+  .pc-plat-bili { background: rgba(0,174,236,0.12); color: #00aeec; }
+  .pc-plat-weixin { background: rgba(7,193,96,0.12); color: #07c160; }
+  .pc-plat-douyin { background: rgba(254,44,85,0.12); color: #fe2c55; }
+  .pc-plat-zhihu { background: rgba(0,102,255,0.12); color: #0066ff; }
+
+  .pc-stats { display: flex; gap: 16px; padding: 14px 20px; }
+  .pc-stat { text-align: center; }
+  .pc-stat .val { font-size: 16px; font-weight: 700; color: #fff; }
+  .pc-stat .lbl { font-size: 9px; color: #64748b; text-transform: uppercase; margin-top: 2px; }
+
+  .pc-actions { padding: 0 20px 14px; display: flex; gap: 8px; }
+  .pc-btn {
+    flex: 1; padding: 7px 0; border-radius: 6px; text-align: center;
+    font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+    text-decoration: none; display: block;
+  }
+  .pc-btn-primary { background: #818cf8; color: #fff; }
+  .pc-btn-primary:hover { background: #6366f1; }
+  .pc-btn-secondary { background: rgba(255,255,255,0.06); color: #a5b4fc; border: 1px solid rgba(129,140,248,0.2); }
+  .pc-btn-secondary:hover { background: rgba(129,140,248,0.12); }
+
+  .pc-section { padding: 12px 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .pc-section h4 { font-size: 10px; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .pc-topic-tag {
+    display: inline-block; padding: 3px 9px; margin: 2px 3px 2px 0;
+    border-radius: 8px; font-size: 10px;
+  }
+  .pc-conn-item {
+    display: flex; align-items: center; gap: 8px; padding: 5px 0;
+    cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); transition: opacity 0.15s;
+  }
+  .pc-conn-item:hover { opacity: 0.8; }
+  .pc-conn-item .cn { font-size: 12px; color: #e2e8f0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pc-conn-item .cs { font-size: 10px; color: #64748b; flex-shrink: 0; }
+  .pc-conn-shared { padding: 0 0 4px; font-size: 0; }
+  .pc-conn-shared span {
+    display: inline-block; padding: 1px 5px; border-radius: 4px; font-size: 9px; margin-right: 2px;
+  }
+
+  /* ---- Bottom bar ---- */
+  #bottom-bar {
+    position: fixed; bottom: 16px; left: calc(360px + (100vw - 360px) / 2); transform: translateX(-50%);
+    background: rgba(5,6,10,0.85); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+    padding: 6px 18px; display: flex; gap: 20px; font-size: 11px; z-index: 1000; color: #94a3b8; pointer-events: auto;
+  }
+  #bottom-bar .bval { font-weight: 600; color: #818cf8; }
+
+  /* ---- Legend (bottom-left, offset by sidebar width) ---- */
+  #legend {
+    position: fixed; bottom: 16px; left: 376px; z-index: 1000;
+    background: rgba(5,6,10,0.85); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+    padding: 10px 14px; font-size: 11px; pointer-events: auto;
+  }
+  .legend-item { display: flex; align-items: center; gap: 7px; margin: 3px 0; color: #94a3b8; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legend-title { font-size: 9px; color: #64748b; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.3px; }
+  .legend-size { display: flex; align-items: center; gap: 5px; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06); color: #64748b; font-size: 9px; }
+  .legend-size .dot-sm { width: 6px; height: 6px; border-radius: 50%; background: #94a3b8; }
+  .legend-size .dot-lg { width: 14px; height: 14px; border-radius: 50%; background: #94a3b8; }
+
+  /* ---- Methodology (bottom-right, collapsible) ---- */
+  #methodology {
+    position: fixed; bottom: 16px; right: 16px; z-index: 1000;
+    background: rgba(5,6,10,0.85); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+    width: 270px; font-size: 11px; overflow: hidden; transition: max-height 0.3s ease;
+    pointer-events: auto;
+  }
+  #meth-header {
+    padding: 10px 14px; cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+    color: #94a3b8; user-select: none;
+  }
+  #meth-header:hover { color: #e2e8f0; }
+  #meth-header .mh-title { font-weight: 600; }
+  #meth-header .mh-arrow { transition: transform 0.3s; font-size: 10px; }
+  #methodology.expanded #meth-header .mh-arrow { transform: rotate(180deg); }
+  #meth-body {
+    max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+    padding: 0 14px;
+  }
+  #methodology.expanded #meth-body { max-height: 500px; padding: 0 14px 14px; }
+  .meth-subtitle { color: #a5b4fc; font-weight: 700; font-size: 12px; margin-bottom: 8px; }
+  .meth-row { display: flex; align-items: flex-start; gap: 8px; margin: 6px 0; color: #94a3b8; line-height: 1.5; }
+  .meth-row .mi { flex-shrink: 0; width: 16px; text-align: center; }
+  .meth-row .mv { flex: 1; }
+  .meth-row .mv b { color: #e2e8f0; }
+  .meth-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 10px 0; }
+  .meth-quota { color: #64748b; font-size: 10px; line-height: 1.6; }
+  .meth-quota b { color: #94a3b8; }
+
+  /* ---- Loading ---- */
+  #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; z-index: 20; }
+  #loading .spinner { width: 36px; height: 36px; border: 2px solid rgba(255,255,255,0.06); border-top: 2px solid #818cf8; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 10px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Tooltip */
+  .node-tooltip { background: rgba(9,10,16,0.95); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 12px; color: #e2e8f0; font-family: 'Inter',sans-serif; font-size: 11px; line-height: 1.4; pointer-events: none; max-width: 260px; }
+  .node-tooltip .tt-name { font-weight: 600; font-size: 13px; margin-bottom: 2px; }
+  .node-tooltip .tt-meta { color: #94a3b8; font-size: 10px; }
+  .node-tooltip .tt-meta b { color: #818cf8; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="sidebar">
+    <div id="sidebar-header">
+      <h1>阿悦<span>AI图谱</span></h1>
+      <div class="subtitle" id="update-time">中文AI博主分布</div>
+    </div>
+
+    <div id="search-box"><input type="text" id="search-input" placeholder="搜索博主名称..."></div>
+    <div id="filter-row">
+      <button class="filter-btn active" data-platform="all">全部</button>
+      <button class="filter-btn" data-platform="xhs">小红书</button>
+      <button class="filter-btn" data-platform="bili">B站</button>
+    </div>
+    <div id="topic-area">
+      <h3>话题标签</h3>
+      <div id="topic-tags"></div>
+    </div>
+    <div id="blogger-list"></div>
+    <div id="sidebar-footer">
+      <img class="author-avatar" src="https://p26.douyincdn.com/aweme/v1/akm/image/zoom_galileo/35d72fdd7f70a19ef7177554f20b3f4d/900fa70700019a5e1000004759430032/webpImageTemp/d3d0cd73ba2448a7b6d2f2b2e0c93e2_smartImageTemp" alt="阿悦很严格">
+      <div class="author-info">
+        <div class="author-name">阿悦很严格</div>
+        <div class="author-label">AI科普博主</div>
+      </div>
+      <a class="author-xhs-btn" href="https://www.douyin.com/user/MS4wLjABAAAImT4kQ_z2XKP3mZQ6Xj6l8a3zY6l8a3zY6l8a3zY6l8" target="_blank" style="background: rgba(254,44,85,0.12); border-color: rgba(254,44,85,0.15);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="%23FE2C55"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>关注
+      </a>
+    </div>
+  </div>
+
+  <div id="graph-container">
+    <div id="loading"><div class="spinner"></div><p style="color:#64748b;font-size:12px">加载图谱...</p></div>
+  </div>
+</div>
+
+<!-- Overlays: placed OUTSIDE #app so ForceGraph3D can't cover them -->
+<!-- Profile Card (shown on node click) -->
+<div id="profile-card">
+  <div class="pc-close" id="pc-close">&times;</div>
+  <div id="pc-content"></div>
+</div>
+
+<!-- Bottom bar -->
+<div id="bottom-bar">
+  <span><span class="bval" id="s-total">0</span> 博主</span>
+  <span><span class="bval" id="s-topics">0</span> 话题</span>
+  <span><span class="bval" id="s-edges">0</span> 连接</span>
+</div>
+
+<!-- Legend (bottom-left) -->
+<div id="legend">
+  <div class="legend-title">阿悦AI图谱 · 300博主</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#00aeec;box-shadow:0 0 6px #00aeec"></div>B站 <span style="color:#64748b;margin-left:auto">150</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ff6b8a;box-shadow:0 0 6px #ff6b8a"></div>小红书 <span style="color:#64748b;margin-left:auto">50</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#07c160;box-shadow:0 0 6px #07c160"></div>微信公众号 <span style="color:#64748b;margin-left:auto">50</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fe2c55;box-shadow:0 0 6px #fe2c55"></div>抖音 <span style="color:#64748b;margin-left:auto">30</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0066ff;box-shadow:0 0 6px #0066ff"></div>知乎 <span style="color:#64748b;margin-left:auto">20</span></div>
+  <div class="legend-size">
+    <div class="dot-sm"></div>
+    <span>Score 低</span>
+    <div style="flex:1"></div>
+    <span>Score 高</span>
+    <div class="dot-lg"></div>
+  </div>
+</div>
+
+<!-- Methodology (bottom-right, collapsible) -->
+<div id="methodology">
+  <div id="meth-header">
+    <span class="mh-title">评分方法 Methodology</span>
+    <span class="mh-arrow">&#9660;</span>
+  </div>
+  <div id="meth-body">
+    <div class="meth-subtitle">粉丝数不是一切</div>
+    <div style="color:#64748b;margin-bottom:8px">Score = 4个维度综合评估</div>
+    <div class="meth-row"><span class="mi">1</span><span class="mv"><b>粉丝影响力</b> (max 30)<br>log<sub>10</sub>(粉丝数)<sup>2</sup>，百万粉封顶</span></div>
+    <div class="meth-row"><span class="mi">2</span><span class="mv"><b>搜索曝光度</b> (max 13)<br>被多少AI话题搜索命中</span></div>
+    <div class="meth-row"><span class="mi">3</span><span class="mv"><b>话题覆盖度</b> (max 15)<br>覆盖多少具体AI方向</span></div>
+    <div class="meth-row"><span class="mi">4</span><span class="mv"><b>内容时效性</b> (max 10)<br>30天内的活跃程度</span></div>
+    <div class="meth-divider"></div>
+    <div class="meth-quota">
+      <b>平台配额</b><br>
+      B站 150 &middot; 小红书 50 &middot; 微信 50<br>
+      抖音 30 &middot; 知乎 20<br>
+      每平台独立排名，确保多元覆盖
+    </div>
+  </div>
+</div>
+
+<script src="./three.min.js"></script>
+<script src="./3d-force-graph.min.js"></script>
+
+<script>
+// --- Config ---
+const PLAT_COLORS = {
+  xhs: 0xff6b8a, bili: 0x00aeec,
+  weixin: 0x07c160, douyin: 0xfe2c55, zhihu: 0x0066ff
+};
+const PLAT_NAMES = {
+  xhs: "小红书", bili: "B站",
+  weixin: "微信公众号", douyin: "抖音", zhihu: "知乎"
+};
+const PALETTE = [
+  "#818cf8","#f472b6","#22d3ee","#facc15","#fb923c","#a78bfa","#f87171","#4ade80","#60a5fa","#fbbf24",
+  "#34d399","#e879f9","#38bdf8","#fb7185","#a3e635","#c084fc","#2dd4bf","#fca5a5","#86efac","#fde68a",
+  "#93c5fd","#d8b4fe","#67e8f9","#fdba74","#bef264","#c4b5fd","#5eead4","#fda4af","#bbf7d0","#fef08a",
+];
+let TOPIC_COLORS = {};
+
+function platName(p) { return PLAT_NAMES[p] || p; }
+function platClass(p) { return `plat-${p}`; }
+function pcPlatClass(p) { return `pc-plat-${p}`; }
+
+// --- State ---
+let graph, graphData, selectedNode = null;
+let searchQuery = "", activePlatform = "all", activeTopic = null;
+let sortedNodes = [], materialsMap = {}, neighborMap = {};
+
+const formatF = (n, plat) => {
+  if ((!n || n === 0) && plat === "weixin") return "未公开";
+  return n >= 10000 ? (n/10000).toFixed(1)+"万" : n >= 1000 ? (n/1000).toFixed(1)+"K" : String(n||0);
+};
+function hexToRgba(hex, a) { const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16); return `rgba(${r},${g},${b},${a})`; }
+
+function nodeSize(n) {
+  const s = n.score || 0;
+  if (s >= 50) return 8; if (s >= 40) return 6.5; if (s >= 30) return 5;
+  if (s >= 22) return 4; if (s >= 15) return 3.5; return 3;
+}
+
+// --- Text Sprite for node labels ---
+function makeTextSprite(text, fontSize) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const font = `bold ${fontSize}px Inter, sans-serif`;
+  ctx.font = font;
+  const tw = ctx.measureText(text).width;
+  const pad = 10;
+  const w = tw + pad * 2;
+  const h = fontSize + pad;
+  canvas.width = w;
+  canvas.height = h;
+  // Background pill
+  ctx.font = font;
+  ctx.fillStyle = 'rgba(0,0,0,0.5)';
+  ctx.beginPath();
+  const r = h / 2;
+  ctx.moveTo(r, 0); ctx.lineTo(w - r, 0); ctx.arc(w - r, r, r, -Math.PI/2, Math.PI/2);
+  ctx.lineTo(r, h); ctx.arc(r, r, r, Math.PI/2, -Math.PI/2);
+  ctx.closePath(); ctx.fill();
+  // Text
+  ctx.fillStyle = '#ffffff';
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'center';
+  ctx.fillText(text, w / 2, h / 2);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.minFilter = THREE.LinearFilter;
+  const mat = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false, depthTest: false });
+  const sprite = new THREE.Sprite(mat);
+  sprite.scale.set(w / 14, h / 14, 1);
+  sprite.visible = false;
+  return sprite;
+}
+
+// --- Glow Node ---
+function buildGlowNode(node) {
+  const group = new THREE.Group();
+  const sz = nodeSize(node);
+  const color = PLAT_COLORS[node.platform] || 0x818cf8;
+  const mats = [];
+  for (let i = 15; i >= 0; i--) {
+    const t = i / 16;
+    const mat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.04 + Math.pow(1-t,3)*0.35, depthWrite: false });
+    group.add(new THREE.Mesh(new THREE.SphereGeometry(sz*(1+t*1.2), 16, 16), mat));
+    mats.push(mat);
+  }
+  const coreMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.95 });
+  group.add(new THREE.Mesh(new THREE.SphereGeometry(sz*0.85, 14, 14), coreMat));
+  mats.push(coreMat);
+  materialsMap[node.id] = mats;
+
+  // Add name label sprite
+  const label = makeTextSprite(node.name || "?", 26);
+  label.position.set(0, sz * 2.2 + 1.5, 0);
+  label.renderOrder = 999;
+  group.add(label);
+  group.userData = { label, nodeScore: node.score || 0 };
+
+  return group;
+}
+
+function updateNodeAppearance() {
+  graphData.nodes.forEach(n => {
+    const mats = materialsMap[n.id];
+    if (!mats) return;
+    const base = PLAT_COLORS[n.platform] || 0x818cf8;
+    if (selectedNode) {
+      const lit = n.id === selectedNode.id || (neighborMap[selectedNode.id] && neighborMap[selectedNode.id].has(n.id));
+      mats.forEach(m => m.color.setHex(lit ? base : 0x222222));
+    } else {
+      mats.forEach(m => m.color.setHex(base));
+    }
+  });
+}
+
+// --- Init ---
+async function init() {
+  const cacheBust = "?v=" + Date.now();
+  try { graphData = await (await fetch("./public/graph.json" + cacheBust)).json(); }
+  catch(e) { try { graphData = await (await fetch("../data/graph.json" + cacheBust)).json(); } catch(e2) { document.getElementById("loading").innerHTML="<p style='color:#f87171'>无法加载数据</p>"; return; }}
+  if (graphData.edges && !graphData.links) graphData.links = graphData.edges;
+  document.getElementById("loading").style.display = "none";
+
+  // Build neighbor map
+  graphData.links.forEach(e => {
+    const s = typeof e.source==="object"?e.source.id:e.source, t = typeof e.target==="object"?e.target.id:e.target;
+    if (!neighborMap[s]) neighborMap[s]=new Set(); if (!neighborMap[t]) neighborMap[t]=new Set();
+    neighborMap[s].add(t); neighborMap[t].add(s);
+  });
+
+  // Build topic colors
+  const allTopics = new Set();
+  graphData.nodes.forEach(n => (n.topics||[]).forEach(t => allTopics.add(t)));
+  [...allTopics].sort().forEach((t,i) => { TOPIC_COLORS[t] = PALETTE[i % PALETTE.length]; });
+
+  sortedNodes = [...graphData.nodes].sort((a,b) => (b.score||0)-(a.score||0));
+
+  // Detect platforms in data
+  const platforms = new Set(graphData.nodes.map(n => n.platform));
+  updateFilterButtons(platforms);
+
+  initGraph();
+  buildSidebar();
+
+  document.getElementById("s-total").textContent = graphData.nodes.length;
+  document.getElementById("s-edges").textContent = graphData.links.length;
+  document.getElementById("s-topics").textContent = allTopics.size;
+
+  if (graphData.updated_at) {
+    const d = new Date(graphData.updated_at*1000);
+    const platList = [...platforms].map(p => platName(p)).join(" + ");
+    document.getElementById("update-time").textContent = `更新于 ${d.toLocaleDateString("zh-CN")} · ${platList}`;
+  }
+
+  // Methodology toggle
+  document.getElementById("meth-header").onclick = () => {
+    document.getElementById("methodology").classList.toggle("expanded");
+  };
+
+  // Profile card close
+  document.getElementById("pc-close").onclick = () => deselectBlogger();
+}
+
+function updateFilterButtons(platforms) {
+  const row = document.getElementById("filter-row");
+  let html = '<button class="filter-btn active" data-platform="all">全部</button>';
+  const order = ["xhs","bili","weixin","douyin","zhihu"];
+  order.forEach(p => {
+    if (platforms.has(p)) {
+      html += `<button class="filter-btn" data-platform="${p}">${platName(p)}</button>`;
+    }
+  });
+  row.innerHTML = html;
+}
+
+function initGraph() {
+  const container = document.getElementById("graph-container");
+  graph = ForceGraph3D({ extraRenderers: [] })(container)
+    .graphData(graphData)
+    .backgroundColor("#0B0C15")
+    .showNavInfo(false)
+    .nodeThreeObject(n => buildGlowNode(n))
+    .nodeThreeObjectExtend(false)
+    .linkWidth(1).linkOpacity(1)
+    .linkVisibility(link => {
+      if (!selectedNode) return true;
+      const s = typeof link.source==="object"?link.source.id:link.source;
+      const t = typeof link.target==="object"?link.target.id:link.target;
+      return s===selectedNode.id || t===selectedNode.id;
+    })
+    .linkColor(() => selectedNode ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.07)")
+    .nodeLabel(n => `<div class="node-tooltip"><div class="tt-name">${n.name||"?"}</div><div class="tt-meta">${platName(n.platform)} · <b>${formatF(n.followers, n.platform)}</b>粉丝 · Score ${(n.score||0).toFixed(1)}</div></div>`)
+    .onNodeClick(n => { if(n) selectBlogger(n); })
+    .onBackgroundClick(() => deselectBlogger())
+    .enableNodeDrag(true)
+    .onNodeDragEnd(n => { n.fx=n.x; n.fy=n.y; n.fz=n.z; })
+    .d3VelocityDecay(0.4).d3AlphaDecay(0.02).warmupTicks(60).cooldownTicks(150);
+  graph.d3Force("charge").strength(-30);
+  graph.d3Force("link").distance(l => Math.max(30, 80-(l.weight||1)*12));
+
+  // Distance-based label visibility
+  let tickCount = 0;
+  graph.onEngineTick(() => {
+    tickCount++;
+    if (tickCount % 3 !== 0) return; // check every 3 frames for perf
+    const cam = graph.camera().position;
+    graphData.nodes.forEach(n => {
+      const obj = n.__threeObj;
+      if (!obj || !obj.userData || !obj.userData.label) return;
+      const dx = (n.x||0)-cam.x, dy = (n.y||0)-cam.y, dz = (n.z||0)-cam.z;
+      const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+      const score = obj.userData.nodeScore || 0;
+      // Tiered visibility: top nodes show from further away
+      let threshold;
+      if (score >= 50) threshold = 350;
+      else if (score >= 40) threshold = 280;
+      else if (score >= 30) threshold = 220;
+      else if (score >= 20) threshold = 150;
+      else threshold = 90;
+      obj.userData.label.visible = dist < threshold;
+    });
+  });
+}
+
+// --- Sidebar ---
+function buildSidebar() {
+  buildTopicTags();
+  renderList();
+
+  document.getElementById("search-input").addEventListener("input", e => { searchQuery = e.target.value.toLowerCase(); renderList(); });
+  document.getElementById("filter-row").addEventListener("click", e => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active"); activePlatform = btn.dataset.platform; renderList();
+  });
+}
+
+function buildTopicTags() {
+  const counts = {};
+  graphData.nodes.forEach(n => (n.topics||[]).forEach(t => { counts[t]=(counts[t]||0)+1; }));
+  const sorted = Object.keys(TOPIC_COLORS).sort((a,b) => (counts[b]||0)-(counts[a]||0));
+  const container = document.getElementById("topic-tags");
+  container.innerHTML = sorted.map(t => {
+    const c = TOPIC_COLORS[t];
+    return `<span class="topic-tag active" data-topic="${t}" style="background:${hexToRgba(c,0.12)};color:${c}">${t} ${counts[t]||0}</span>`;
+  }).join("");
+  container.querySelectorAll(".topic-tag").forEach(el => {
+    el.onclick = () => toggleTopic(el.dataset.topic);
+  });
+}
+
+function toggleTopic(topicId) {
+  if (activeTopic === topicId) {
+    activeTopic = null;
+    document.querySelectorAll(".topic-tag").forEach(t => { t.classList.add("active"); t.classList.remove("dimmed"); });
+  } else {
+    activeTopic = topicId;
+    document.querySelectorAll(".topic-tag").forEach(t => {
+      if (t.dataset.topic === topicId) { t.classList.add("active"); t.classList.remove("dimmed"); }
+      else { t.classList.remove("active"); t.classList.add("dimmed"); }
+    });
+  }
+  renderList();
+}
+
+function renderList() {
+  const list = document.getElementById("blogger-list");
+  let filtered = sortedNodes;
+  if (activePlatform !== "all") filtered = filtered.filter(n => n.platform === activePlatform);
+  if (activeTopic) filtered = filtered.filter(n => (n.topics||[]).includes(activeTopic));
+  if (searchQuery) filtered = filtered.filter(n => (n.name||"").toLowerCase().includes(searchQuery));
+
+  list.innerHTML = filtered.map((n, i) => {
+    const pc = platClass(n.platform);
+    const pn = platName(n.platform);
+    const sel = selectedNode && selectedNode.id===n.id ? " selected" : "";
+    return `<div class="blogger-item${sel}" data-id="${n.id}">
+      <div class="rank">${i+1}</div>
+      <div class="info"><div class="bname">${n.name||"?"}</div><div class="bmeta"><span class="${pc}">${pn}</span> · Score ${(n.score||0).toFixed(1)}</div></div>
+      <div class="followers">${formatF(n.followers, n.platform)}</div>
+    </div>`;
+  }).join("");
+  list.querySelectorAll(".blogger-item").forEach(el => {
+    el.onclick = () => { const n = graphData.nodes.find(x => x.id===el.dataset.id); if(n) selectBlogger(n); };
+  });
+}
+
+// --- Select / Deselect ---
+function selectBlogger(node) {
+  selectedNode = node;
+  updateNodeAppearance();
+  graph.linkVisibility(graph.linkVisibility());
+  graph.linkColor(graph.linkColor());
+  const dist=180, r=1+dist/Math.hypot(node.x||1,node.y||1,node.z||1);
+  graph.cameraPosition({x:(node.x||0)*r,y:(node.y||0)*r,z:(node.z||0)*r}, node, 1000);
+  showProfileCard(node);
+  renderList(); // update highlight in sidebar
+  // Scroll to selected in sidebar
+  setTimeout(() => {
+    const sel = document.querySelector(".blogger-item.selected");
+    if (sel) sel.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 100);
+}
+
+function deselectBlogger() {
+  selectedNode = null;
+  updateNodeAppearance();
+  graph.linkVisibility(graph.linkVisibility());
+  graph.linkColor(graph.linkColor());
+  document.getElementById("profile-card").classList.remove("active");
+  renderList();
+}
+
+function showProfileCard(node) {
+  const card = document.getElementById("profile-card");
+  card.classList.add("active");
+
+  const pn = platName(node.platform);
+  const pcCls = pcPlatClass(node.platform);
+
+  // Connected nodes
+  const connected = [];
+  graphData.links.forEach(e => {
+    const src = typeof e.source==="object"?e.source:graphData.nodes.find(x=>x.id===e.source);
+    const tgt = typeof e.target==="object"?e.target:graphData.nodes.find(x=>x.id===e.target);
+    if(!src||!tgt) return;
+    if(src.id===node.id) connected.push({node:tgt, topics:e.topics||[]});
+    else if(tgt.id===node.id) connected.push({node:src, topics:e.topics||[]});
+  });
+  connected.sort((a,b) => (b.node.score||0)-(a.node.score||0));
+
+  const topicHtml = (node.topics||[]).map(t => {
+    const c = TOPIC_COLORS[t] || "#818cf8";
+    return `<span class="pc-topic-tag" style="background:${hexToRgba(c,0.12)};color:${c}">${t}</span>`;
+  }).join("");
+
+  const connHtml = connected.slice(0,15).map(c => {
+    const cp = platClass(c.node.platform);
+    const cpn = platName(c.node.platform);
+    const sharedHtml = c.topics.slice(0,3).map(t => {
+      const tc = TOPIC_COLORS[t]||"#818cf8";
+      return `<span style="background:${hexToRgba(tc,0.1)};color:${tc}">${t}</span>`;
+    }).join("");
+    return `<div class="pc-conn-item" data-id="${c.node.id}">
+      <span class="cn">${c.node.name||"?"} <span class="${cp}" style="font-size:9px">${cpn}</span></span>
+      <span class="cs">${(c.node.score||0).toFixed(1)}</span>
+    </div>
+    ${sharedHtml ? `<div class="pc-conn-shared">${sharedHtml}</div>` : ""}`;
+  }).join("");
+
+  document.getElementById("pc-content").innerHTML = `
+    <div class="pc-header">
+      <h2>${node.name||"?"}</h2>
+      <span class="pc-plat ${pcCls}">${pn}</span>
+    </div>
+    <div class="pc-stats">
+      <div class="pc-stat"><div class="val">${formatF(node.followers, node.platform)}</div><div class="lbl">粉丝</div></div>
+      <div class="pc-stat"><div class="val">${(node.score||0).toFixed(1)}</div><div class="lbl">Score</div></div>
+      <div class="pc-stat"><div class="val">${connected.length}</div><div class="lbl">连接</div></div>
+    </div>
+    ${node.url ? `<div class="pc-actions">
+      <a href="${node.url}" target="_blank" class="pc-btn pc-btn-primary">打开主页</a>
+      <a href="${node.url}" target="_blank" class="pc-btn pc-btn-secondary">关注</a>
+    </div>` : ""}
+    ${topicHtml ? `<div class="pc-section"><h4>擅长领域</h4>${topicHtml}</div>` : ""}
+    ${connected.length > 0 ? `<div class="pc-section"><h4>关联博主 (${connected.length})</h4>${connHtml}</div>` : ""}`;
+
+  // Click connected items
+  document.getElementById("pc-content").querySelectorAll(".pc-conn-item").forEach(el => {
+    el.onclick = () => { const n = graphData.nodes.find(x=>x.id===el.dataset.id); if(n) selectBlogger(n); };
+  });
+}
+
+init();
+</script>
+</body>
+</html>
