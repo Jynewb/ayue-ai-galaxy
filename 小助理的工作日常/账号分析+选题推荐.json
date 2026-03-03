@@ -1,0 +1,327 @@
+{
+  "profile": {
+    "topVideos": [
+      {
+        "作品名称": "最火的本地部署大模型，openclaw（clawdbot）到现在还有安装失败的，这期把所有问题都拆到最细，每一步安装流程都讲清楚了。#openclaw #干货分享 #AI #本地部署",
+        "发布时间": "2026-02-08 19:27:40",
+        "体裁": "5min+视频",
+        "审核状态": "公开",
+        "播放量": "196974",
+        "完播率": "0.015345",
+        "5s完播率": "0.416996",
+        "封面点击率": "0.193573",
+        "2s跳出率": "0.374931",
+        "平均播放时长": "23.539079",
+        "点赞量": "7803",
+        "分享量": "950",
+        "评论量": "825",
+        "收藏量": "5702",
+        "主页访问量": "3859",
+        "粉丝增量": "1420"
+      },
+      {
+        "作品名称": "无限制免费本地生图，超小模型本地部署，这次真的纯干货 #AI #干货分享 #图片生成 #教程来了 #工具分享",
+        "发布时间": "2026-01-09 17:00:48",
+        "体裁": "3-5min视频",
+        "审核状态": "公开",
+        "播放量": "94922",
+        "完播率": "0.017706",
+        "5s完播率": "0.418521",
+        "封面点击率": "0.227273",
+        "2s跳出率": "0.328310",
+        "平均播放时长": "19.385638",
+        "点赞量": "2850",
+        "分享量": "181",
+        "评论量": "196",
+        "收藏量": "1867",
+        "主页访问量": "1108",
+        "粉丝增量": "304"
+      },
+      {
+        "作品名称": "无限制免费本地生视频，我又来了！#AI #comfyui教程 #视频生成 #本地部署大模型 #干货分享",
+        "发布时间": "2026-01-26 21:03:19",
+        "体裁": "3-5min视频",
+        "审核状态": "公开",
+        "播放量": "81481",
+        "完播率": "0.027350",
+        "5s完播率": "0.446030",
+        "封面点击率": "0.146219",
+        "2s跳出率": "0.330823",
+        "平均播放时长": "28.536473",
+        "点赞量": "2657",
+        "分享量": "294",
+        "评论量": "460",
+        "收藏量": "2688",
+        "主页访问量": "1108",
+        "粉丝增量": "612"
+      },
+      {
+        "作品名称": "openclaw有多好用，你理解了SKILL就明白了。#openclaw #本地部署 #skills #AI",
+        "发布时间": "2026-02-13 20:59:02",
+        "体裁": "3-5min视频",
+        "审核状态": "公开",
+        "播放量": "21610",
+        "完播率": "0.010967",
+        "5s完播率": "0.409172",
+        "封面点击率": "0.419391",
+        "2s跳出率": "0.318285",
+        "平均播放时长": "14.801943",
+        "点赞量": "679",
+        "分享量": "36",
+        "评论量": "14",
+        "收藏量": "273",
+        "主页访问量": "531",
+        "粉丝增量": "87"
+      },
+      {
+        "作品名称": "openclaw国产热门大模型Token消耗测评，到底谁最省Token？#openclaw #本地部署 #大模型 #ai",
+        "发布时间": "2026-02-19 17:58:53",
+        "体裁": "3-5min视频",
+        "审核状态": "公开",
+        "播放量": "13854",
+        "完播率": "0.019796",
+        "5s完播率": "0.426792",
+        "封面点击率": "0.227252",
+        "2s跳出率": "0.317322",
+        "平均播放时长": "20.517393",
+        "点赞量": "430",
+        "分享量": "27",
+        "评论量": "10",
+        "收藏量": "119",
+        "主页访问量": "237",
+        "粉丝增量": "29"
+      }
+    ],
+    "keywordStats": {
+      "OpenClaw": {
+        "count": 1,
+        "avgViews": 2848,
+        "totalViews": 2848
+      },
+      "本地部署": {
+        "count": 5,
+        "avgViews": 81768,
+        "totalViews": 408841
+      },
+      "免费": {
+        "count": 2,
+        "avgViews": 88202,
+        "totalViews": 176403
+      },
+      "教程": {
+        "count": 2,
+        "avgViews": 88202,
+        "totalViews": 176403
+      },
+      "干货": {
+        "count": 4,
+        "avgViews": 94056,
+        "totalViews": 376225
+      },
+      "视频生成": {
+        "count": 1,
+        "avgViews": 81481,
+        "totalViews": 81481
+      },
+      "图片生成": {
+        "count": 1,
+        "avgViews": 94922,
+        "totalViews": 94922
+      },
+      "测评": {
+        "count": 1,
+        "avgViews": 13854,
+        "totalViews": 13854
+      },
+      "对比": {
+        "count": 0,
+        "avgViews": 0,
+        "totalViews": 0
+      },
+      "ComfyUI": {
+        "count": 0,
+        "avgViews": 0,
+        "totalViews": 0
+      }
+    },
+    "durationStats": {
+      "5min+视频": {
+        "count": 5,
+        "totalViews": 203488,
+        "totalFans": 1453,
+        "avgViews": 40698,
+        "avgFans": 291
+      },
+      "3-5min视频": {
+        "count": 8,
+        "totalViews": 216874,
+        "totalFans": 1045,
+        "avgViews": 27109,
+        "avgFans": 131
+      },
+      "1-3min视频": {
+        "count": 7,
+        "totalViews": 23527,
+        "totalFans": 66,
+        "avgViews": 3361,
+        "avgFans": 9
+      },
+      "1min-视频": {
+        "count": 1,
+        "totalViews": 1471,
+        "totalFans": 3,
+        "avgViews": 1471,
+        "avgFans": 3
+      }
+    },
+    "totalVideos": 21,
+    "totalViews": 445360,
+    "totalFans": 2567
+  },
+  "strengths": {
+    "topKeywords": [
+      {
+        "keyword": "图片生成",
+        "count": 1,
+        "avgViews": 94922,
+        "level": "S"
+      },
+      {
+        "keyword": "干货",
+        "count": 4,
+        "avgViews": 94056,
+        "level": "S"
+      },
+      {
+        "keyword": "免费",
+        "count": 2,
+        "avgViews": 88202,
+        "level": "S"
+      },
+      {
+        "keyword": "教程",
+        "count": 2,
+        "avgViews": 88202,
+        "level": "S"
+      },
+      {
+        "keyword": "本地部署",
+        "count": 5,
+        "avgViews": 81768,
+        "level": "S"
+      }
+    ],
+    "bestDuration": "5min+视频",
+    "bestDurationAvgViews": 40698
+  },
+  "recommendations": [
+    {
+      "title": "免费本地部署AI生图模型，配置要求最低",
+      "content": "最低配置也能跑SD类模型",
+      "category": "教程",
+      "hookType": "free",
+      "isNew": true,
+      "isRising": true,
+      "score": 85,
+      "reasons": [
+        "✅ 高度匹配擅长领域",
+        "✅ 新鲜热点",
+        "✅ 免费是流量密码"
+      ]
+    },
+    {
+      "title": "2026年免费本地AI工具横评，这几个够用了",
+      "content": "免费工具对比，选最省钱的",
+      "category": "测评",
+      "hookType": "free",
+      "isNew": true,
+      "isRising": false,
+      "score": 65,
+      "reasons": [
+        "✅ 部分匹配",
+        "✅ 新鲜热点",
+        "✅ 免费是流量密码"
+      ]
+    },
+    {
+      "title": "2026年最新OpenClaw安装教程，零基础也能学会",
+      "content": "OpenClaw最新安装指南，覆盖Mac/Windows",
+      "category": "教程",
+      "hookType": "tutorial",
+      "isNew": true,
+      "isRising": true,
+      "score": 50,
+      "reasons": [
+        "✅ 部分匹配",
+        "✅ 新鲜热点"
+      ]
+    },
+    {
+      "title": "AI工具这些坑千万别踩，2026避坑指南",
+      "content": "盘点常见智商税和割韭菜",
+      "category": "避坑",
+      "hookType": "controversy",
+      "isNew": true,
+      "isRising": true,
+      "score": 40,
+      "reasons": [
+        "⚠️ 新领域，有风险",
+        "✅ 新鲜热点",
+        "✅ 争议性强"
+      ]
+    },
+    {
+      "title": "OpenClaw + Claude Code 联动，效率翻倍",
+      "content": "OpenClaw使用Claude Code的完整工作流",
+      "category": "教程",
+      "hookType": "combo",
+      "isNew": true,
+      "isRising": true,
+      "score": 30,
+      "reasons": [
+        "⚠️ 新领域，有风险",
+        "✅ 新鲜热点"
+      ]
+    },
+    {
+      "title": "用AI做副业，普通人也能月入过万",
+      "content": "真实案例分享+具体方法",
+      "category": "变现",
+      "hookType": "result",
+      "isNew": false,
+      "isRising": true,
+      "score": 30,
+      "reasons": [
+        "⚠️ 新领域，有风险",
+        "✅ 上升趋势",
+        "✅ 结果导向标题"
+      ]
+    },
+    {
+      "title": "Google Nano Banana 2 实测，比SD更快",
+      "content": "Google最新生图模型体验",
+      "category": "测评",
+      "hookType": "new",
+      "isNew": true,
+      "isRising": true,
+      "score": 30,
+      "reasons": [
+        "⚠️ 新领域，有风险",
+        "✅ 新鲜热点"
+      ]
+    },
+    {
+      "title": "字节即梦AI vs Seedream 5.0，真实对比",
+      "content": "国产AI生图工具实测",
+      "category": "测评",
+      "hookType": "compare",
+      "isNew": true,
+      "isRising": true,
+      "score": 30,
+      "reasons": [
+        "⚠️ 新领域，有风险",
+        "✅ 新鲜热点"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "accounts": [
+    {
+      "id": "qiuzhi2046",
+      "name": "秋芝2046",
+      "platform": "抖音",
+      "topics": [
+        "秋芝",
+        "AI工具",
+        "NotebookLM",
+        "AI在抖音",
+        "抖音年终知识大赏",
+        "AI新星",
+        "ai新星计",
+        "时代的荣耀",
+        "全",
+        "全球创作者计划"
+      ],
+      "recent_videos": [
+        "秋芝2046是2026年抖音上的热门AI视频创作者，以AI技术创作内容而闻名。他的视频涵盖了AI工具和应用，受到大量关注。2026年，他发布了多个受欢迎的AI相关视频。",
+        "2024年1月13日，秋芝2046在抖音平台发布了首个视频《中国AI电影，重塑古装大片《花木兰》mj+AI视频从脚本到分镜到渲染视频，肝了5天，1000多张图，把mjfast都用完了，自己gpu也转",
+        "2026开年视频：从零到入门，五分钟消除AI焦虑#时代的荣耀#全球创作者计划#零基础看懂全球#春节世界观察#AI - 卢诗翰于20260225发布在抖音，已经收获了10000个喜欢，来抖音，"
+      ],
+      "last_updated": "2026-03-03"
+    },
+    {
+      "id": "tech_ppx",
+      "name": "技术爬爬虾",
+      "platform": "抖音",
+      "topics": [
+        "AI新星计划",
+        "科技",
+        "计算机",
+        "编程",
+        "教程",
+        "TRAE"
+      ],
+      "recent_videos": [
+        "技术爬爬虾在2026年发布了关于AI教程的抖音视频，内容涉及OpenClaw和AI新星计划。视频在抖音上获得了大量关注。技术爬爬虾还在知乎上有相关文章。",
+        "OpenClaw(Clawdbot) 海量全玩法攻略本地部署，国内网络友好使用#AI新星计划#科技#计算机#编程#教程- 技术爬爬虾于20260201发布在抖音，已经收获了148.3",
+        "OpenClaw(Clawdbot) 海量全玩法攻略本地部署，国内网络友好使用#AI新星计划#科技#计算机#编程#教程- 技术爬爬虾于20260201发布在抖音，已经收获了148.8"
+      ],
+      "last_updated": "2026-03-03"
+    },
+    {
+      "id": "ai_laosi",
+      "name": "AI老撕机",
+      "platform": "抖音",
+      "topics": [
+        "ai工具学习",
+        "veo",
+        "ai视频制作",
+        "使用方法",
+        "ai",
+        "口播知识分享",
+        "就想说点",
+        "ai技术"
+      ],
+      "recent_videos": [],
+      "last_updated": "2026-03-03"
+    },
+    {
+      "id": "linyi_lYi",
+      "name": "林亦LYi",
+      "platform": "抖音",
+      "topics": [
+        "AI编程",
+        "产品挑战",
+        "程序员日常",
+        "干货分享",
+        "AI口语陪练",
+        "HOW",
+        "openclaw"
+      ],
+      "recent_videos": [],
+      "last_updated": "2026-03-03"
+    },
+    {
+      "id": "laomai",
+      "name": "老麦的工具库",
+      "platform": "抖音",
+      "topics": [
+        "效率神器",
+        "黑",
+        "黑科技",
+        "AI人工智慧抖音",
+        "ppt制作",
+        "ai工具",
+        "抖音知识年终大赏",
+        "ai新星计划",
+        "打工人",
+        "摸"
+      ],
+      "recent_videos": [],
+      "last_updated": "2026-03-03"
+    },
+    {
+      "id": "money_dazu",
+      "name": "钱大柱",
+      "platform": "抖音",
+      "topics": [
+        "都市传说",
+        "怪奇暗房",
+        "房卓卓",
+        "睡前故事"
+      ],
+      "recent_videos": [],
+      "last_updated": "2026-03-03"
+    },
+    {
+      "id": "shejishi_doo",
+      "name": "设计师doo",
+      "platform": "抖音",
+      "topics": [],
+      "recent_videos": [
+        "... 设计师doo入驻抖音，TA的抖音号是doo_moca，已有335000个粉丝，收获了2243668个喜欢，欢迎观看设计师doo ... 2026设计新姿势:文字提取、图层拆解，这才是设计师要的AI · 香蕉Pro"
+      ],
+      "last_updated": "2026-03-03"
+    },
+    {
+      "id": "shennonglaogou",
+      "name": "神烦老狗",
+      "platform": "抖音",
+      "topics": [
+        "抖音年度知",
+        "千问",
+        "Qwen",
+        "ai新星计划",
+        "青年创作者成长计划",
+        "nanobanana"
+      ],
+      "recent_videos": [],
+      "last_updated": "2026-03-03"
+    },
+    {
+      "id": "qualia",
+      "name": "夸利亚Qualia",
+      "platform": "抖音",
+      "topics": [],
+      "recent_videos": [
+        "夸利亚Qualia：一起感受影像的乐趣！📸️ 合作：qualiamedia。夸利亚Qualia入驻抖音，TA的抖音号是Qualiaqu，已有1214000个粉丝，收获了5264372个喜欢，欢迎观看夸利亚Qualia在抖"
+      ],
+      "last_updated": "2026-03-03"
+    }
+  ],
+  "hot_topics": [
+    {
+      "topic": "ai新星计划",
+      "mentions": 2,
+      "trend": "stable"
+    },
+    {
+      "topic": "秋芝",
+      "mentions": 1,
+      "trend": "stable"
+    },
+    {
+      "topic": "AI工具",
+      "mentions": 1,
+      "trend": "stable"
+    },
+    {
+      "topic": "NotebookLM",
+      "mentions": 1,
+      "trend": "stable"
+    },
+    {
+      "topic": "AI在抖音",
+      "mentions": 1,
+      "trend": "stable"
+    },
+    {
+      "topic": "抖音年终知识大赏",
+      "mentions": 1,
+      "trend": "stable"
+    },
+    {
+      "topic": "AI新星",
+      "mentions": 1,
+      "trend": "stable"
+    },
+    {
+      "topic": "ai新星计",
+      "mentions": 1,
+      "trend": "stable"
+    },
+    {
+      "topic": "时代的荣耀",
+      "mentions": 1,
+      "trend": "stable"
+    },
+    {
+      "topic": "全",
+      "mentions": 1,
+      "trend": "stable"
+    }
+  ],
+  "updated_at": "2026-03-03T06:04:46.031Z"
+}

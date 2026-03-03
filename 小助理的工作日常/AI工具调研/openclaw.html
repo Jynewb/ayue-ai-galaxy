@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw - 终极指南</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); min-height: 100vh; color: #fff; padding: 20px; line-height: 1.8; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .back { display: inline-block; color: #00d4ff; text-decoration: none; margin-bottom: 20px; }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; background: linear-gradient(90deg, #00d4ff, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: #aaa; margin-bottom: 30px; font-size: 1.1rem; }
+        .section { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 25px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .section h2 { color: #00d4ff; margin-bottom: 15px; font-size: 1.4rem; border-bottom: 2px solid rgba(0,212,255,0.3); padding-bottom: 10px; }
+        .section h3 { color: #7c3aed; margin: 20px 0 10px; font-size: 1.1rem; }
+        .warning { background: rgba(255,107,107,0.1); border-left: 4px solid #ff6b6b; padding: 15px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .highlight { background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,58,237,0.15)); border-left: 4px solid #00d4ff; padding: 15px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; color: #ddd; }
+        .badge { display: inline-block; background: linear-gradient(135deg, #ff6b6b, #ffa500); padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; margin-right: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: #7c3aed; background: rgba(124,58,237,0.1); }
+        .step { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin: 15px 0; }
+        .step-number { display: inline-block; width: 30px; height: 30px; background: #00d4ff; color: #000; border-radius: 50%; text-align: center; line-height: 30px; font-weight: bold; margin-right: 10px; }
+        .tips { background: rgba(255,193,7,0.1); border-radius: 12px; padding: 20px; margin: 20px 0; }
+        .tips-title { color: #ffc107; font-weight: bold; margin-bottom: 10px; }
+        .recommend { text-align: center; padding: 30px; background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(124,58,237,0.2)); border-radius: 16px; margin-top: 30px; }
+        .recommend h3 { color: #00d4ff; margin-bottom: 10px; }
+        .recommend .score { font-size: 3rem; font-weight: bold; color: #00d4ff; }
+        pre { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; overflow-x: auto; margin: 10px 0; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .feature-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; text-align: center; }
+        .feature-card .icon { font-size: 2rem; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← 返回总览</a>
+        <h1>🔧 OpenClaw 终极指南</h1>
+        <p class="subtitle">GitHub 24.8万星 · 史上增长最快开源项目</p>
+        <div style="margin-bottom: 20px;">
+            <span class="badge">🔥 流量密码</span>
+            <span class="badge" style="background:rgba(0,212,255,0.2);color:#00d4ff;">免费开源</span>
+            <span class="badge" style="background:rgba(124,58,237,0.2);color:#7c3aed;">国产</span>
+        </div>
+        
+        <div class="section">
+            <h2>📊 OpenClaw 是什么？（小白必看）</h2>
+            <div class="highlight">
+                <strong>一句话解释：</strong>OpenClaw是一个"会动手"的AI智能体。它不仅能回答问题，还能帮你<strong>操作电脑、发邮件、写代码、管理文件</strong>。
+            </div>
+            <p>2026年1月底，OpenClaw以极快速度拿下超过20万颗星标，成为GitHub史上增长最快的项目。目前星标数已达<strong>24.8万</strong>，超越Linux成为全球第一！</p>
+        </div>
+        
+        <div class="section">
+            <h2>✨ 能做什么？</h2>
+            <div class="feature-grid">
+                <div class="feature-card"><div class="icon">🌐</div><div>访问网页</div></div>
+                <div class="feature-card"><div class="icon">📧</div><div>处理邮件</div></div>
+                <div class="feature-card"><div class="icon">📁</div><div>整理文件</div></div>
+                <div class="feature-card"><div class="icon">⏰</div><div>发起提醒</div></div>
+                <div class="feature-card"><div class="icon">💻</div><div>写代码</div></div>
+                <div class="feature-card"><div class="icon">📱</div><div>控制手机</div></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🔥 2026年3月最新更新（3.1版本）</h2>
+            <ul>
+                <li><strong>智能体推理默认优化</strong>：不同模型有不同脾气，可以精细化配置</li>
+                <li><strong>企业级运行架构</strong>：支持Docker、Kubernetes部署，自动扩缩容</li>
+                <li><strong>Android节点</strong>：手机也能成为AI节点</li>
+                <li><strong>多平台联动</strong>：微信、钉钉、飞书、Siri四大入口</li>
+                <li><strong>8000+开箱即用Skill</strong>：社区技能市场ClawHub</li>
+                <li><strong>语音消息</strong>：支持发送语音消息</li>
+                <li><strong>互动组件</strong>：支持交互式UI组件</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>💻 小白安装指南（3种方式）</h2>
+            
+            <h3>方式一：Mac/Linux 一键安装（推荐）</h3>
+            <div class="step"><pre>curl -fsSL https://openclaw.ai/install.sh | bash</pre></div>
+            
+            <h3>方式二：Docker 安装（更简单）</h3>
+            <div class="step"><pre>docker run -d -p 8080:8080 \
+  -e ANTHROPIC_API_KEY=your_key \
+  openclaw/openclaw:latest</pre></div>
+            
+            <h3>方式三：手动部署</h3>
+            <div class="step"><pre>git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+pnpm install
+pnpm build
+pnpm start</pre></div>
+        </div>
+        
+        <div class="section">
+            <h2>🔗 接入飞书/微信/钉钉</h2>
+            <div class="step"><div class="step-number">1</div><strong>飞书配置</strong>：创建企业应用 → 获取App ID和Secret → 配置权限 → 填写到OpenClaw配置</div>
+            <div class="step"><div class="step-number">2</div><strong>微信配置</strong>：注册企业微信 → 创建应用 → 获取API权限</div>
+            <div class="step"><div class="step-number">3</div><strong>钉钉配置</strong>：创建钉钉应用 → 开启机器人 → 获取Webhook地址</div>
+            <div class="tips"><div class="tips-title">💡 提示</div>具体配置教程可以参考官方文档或社区教程</div>
+        </div>
+        
+        <div class="section">
+            <h2>💰 需要花多少钱？</h2>
+            <table>
+                <tr><th>项目</th><th>费用</th><th>说明</th></tr>
+                <tr><td>OpenClaw软件</td><td><strong>免费</strong></td><td>开源免费</td></tr>
+                <tr><td>API调用</td><td>¥5-30/月</td><td>取决于使用量</td></tr>
+                <tr><td>服务器</td><td>¥0-50/月</td><td>本地运行则免费</td></tr>
+            </table>
+            <div class="highlight"><strong>推荐模型：</strong>DeepSeek（¥5-10/月）或 Qwen（免费额度充足）</div>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 适合谁用？</h2>
+            <ul>
+                <li>✅ <strong>技术人员</strong>：自动化工作流、代码管理</li>
+                <li>✅ <strong>内容创作者</strong>：批量处理素材、自动发布</li>
+                <li>✅ <strong>企业用户</strong>：私有化部署、智能客服</li>
+                <li>✅ <strong>开发者</strong>：学习Agent开发、定制自己的AI助手</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>⚠️ 注意事项</h2>
+            <div class="warning">
+                <ul>
+                    <li><strong>安全风险</strong>：OpenClaw可以操作电脑，请谨慎授权</li>
+                    <li><strong>API密钥</strong>：不要把API Key分享给他人</li>
+                    <li><strong>隐私</strong>：本地部署更安全</li>
+                    <li><strong>仍在beta</strong>：可能会有bug</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🔮 为什么这么火？</h2>
+            <div class="highlight">
+                <ul>
+                    <li><strong>GitHub第一</strong>：24.8万星超越Linux</li>
+                    <li><strong>国产之光</strong>：中国团队开发</li>
+                    <li><strong>真正能干活</strong>：不仅是问答，还能执行任务</li>
+                    <li><strong>生态繁荣</strong>：8000+技能、活跃社区</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="recommend">
+            <h3>⭐ 小白推荐指数</h3>
+            <div class="score">9.5/10</div>
+            <p>🔥 2026年必学的AI工具！</p>
+        </div>
+    </div>
+</body>
+</html>

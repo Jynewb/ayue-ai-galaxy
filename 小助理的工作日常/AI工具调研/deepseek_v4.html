@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek V4 - 终极指南</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); min-height: 100vh; color: #fff; padding: 20px; line-height: 1.8; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .back { display: inline-block; color: #00d4ff; text-decoration: none; margin-bottom: 20px; }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; background: linear-gradient(90deg, #00d4ff, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: #aaa; margin-bottom: 30px; font-size: 1.1rem; }
+        .section { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 25px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .section h2 { color: #00d4ff; margin-bottom: 15px; font-size: 1.4rem; border-bottom: 2px solid rgba(0,212,255,0.3); padding-bottom: 10px; }
+        .section h3 { color: #7c3aed; margin: 20px 0 10px; font-size: 1.1rem; }
+        .warning { background: rgba(255,107,107,0.1); border-left: 4px solid #ff6b6b; padding: 15px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .highlight { background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(124,58,237,0.15)); border-left: 4px solid #00d4ff; padding: 15px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; color: #ddd; }
+        .badge { display: inline-block; background: linear-gradient(135deg, #ff6b6b, #ffa500); padding: 5px 15px; border-radius: 20px; font-size: 0.85rem; margin-right: 8px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: #7c3aed; background: rgba(124,58,237,0.1); }
+        .step { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin: 15px 0; }
+        .step-number { display: inline-block; width: 30px; height: 30px; background: #00d4ff; color: #000; border-radius: 50%; text-align: center; line-height: 30px; font-weight: bold; margin-right: 10px; }
+        .tips { background: rgba(255,193,7,0.1); border-radius: 12px; padding: 20px; margin: 20px 0; }
+        .tips-title { color: #ffc107; font-weight: bold; margin-bottom: 10px; }
+        .recommend { text-align: center; padding: 30px; background: linear-gradient(135deg, rgba(255,107,107,0.2), rgba(255,165,0,0.2)); border-radius: 16px; margin-top: 30px; }
+        .recommend h3 { color: #ff6b6b; margin-bottom: 10px; }
+        .recommend .score { font-size: 3rem; font-weight: bold; color: #ff6b6b; }
+        pre { background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; overflow-x: auto; margin: 10px 0; }
+        .comparison { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .comparison-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; text-align: center; }
+        .comparison-card.winner { border: 2px solid #00d4ff; }
+        .comparison-card .model { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
+        .comparison-card .score { font-size: 2rem; color: #00d4ff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">← 返回总览</a>
+        <h1>🧠 DeepSeek V4 终极指南</h1>
+        <p class="subtitle">2026年最受期待的中国AI模型 · 编程之王</p>
+        <div style="margin-bottom: 20px;">
+            <span class="badge">🔥 超级热点</span>
+            <span class="badge" style="background:rgba(0,212,255,0.2);color:#00d4ff;">免费使用</span>
+            <span class="badge" style="background:rgba(124,58,237,0.2);color:#7c3aed;">国产之光</span>
+        </div>
+        
+        <div class="section">
+            <h2>📊 核心参数（小白必看）</h2>
+            <table>
+                <tr><th>参数</th><th>数值</th><th>通俗解释</th></tr>
+                <tr><td>参数规模</td><td><strong>1万亿</strong></td><td>大脑里有1万亿个"神经元"，比人脑还多</td></tr>
+                <tr><td>上下文长度</td><td><strong>100万Token</strong></td><td>能一次性读100万字，相当于读完整本《百科全书》</td></tr>
+                <tr><td>模型类型</td><td><strong>原生多模态</strong></td><td>不仅能读文字，还能看图、看视频</td></tr>
+                <tr><td>发布日期</td><td><strong>2026年3月</strong></td><td>下周发布（预计）</td></tr>
+                <tr><td>编程能力</td><td><strong>SWE-bench 83.7%</strong></td><td>超越Claude和GPT，成为编程世界第一</td></tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>🚀 为什么这么强？</h2>
+            <h3>编程能力登顶世界第一</h3>
+            <div class="comparison">
+                <div class="comparison-card winner"><div class="model">DeepSeek V4</div><div class="score">83.7%</div><div>🏆 第一名</div></div>
+                <div class="comparison-card"><div class="model">Claude Opus 4.5</div><div class="score">80.9%</div><div>🥈 第二名</div></div>
+                <div class="comparison-card"><div class="model">GPT-5.2</div><div class="score">80%</div><div>🥉 第三名</div></div>
+            </div>
+            <h3>100万Token上下文是什么概念？</h3>
+            <ul>
+                <li>📚 可以一次性读完整本《三体》小说</li>
+                <li>📄 可以一次性分析上百份PDF文档</li>
+                <li>💻 可以理解整个代码仓库的所有文件</li>
+                <li>📝 之前V3只有12.8万Token，现在提升了<strong>7倍</strong></li>
+            </ul>
+            <div class="highlight"><strong>重大突破！</strong>DeepSeek V4专门为华为昇腾等国产芯片优化，是中国首个完全基于国产算力的大模型。</div>
+        </div>
+        
+        <div class="section">
+            <h2>💻 小白使用指南</h2>
+            <div class="step"><div class="step-number">1</div><strong>网页端</strong>：访问 <a href="https://chat.deepseek.com" style="color:#00d4ff;">chat.deepseek.com</a> 直接使用</div>
+            <div class="step"><div class="step-number">2</div><strong>手机APP</strong>：应用商店搜索"DeepSeek"下载</div>
+            <div class="step"><div class="step-number">3</div><strong>API调用</strong>：<pre>pip install openai
+from openai import OpenAI
+client = OpenAI(api_key="你的密钥", base_url="https://api.deepseek.com")
+response = client.chat.completions.create(model="deepseek-chat", messages=[{"role": "user", "content": "你好"}])</pre></div>
+            <div class="tips"><div class="tips-title">💡 使用技巧</div><ul><li>直接提问，像和朋友聊天</li><li>让它帮你写代码</li><li>上传文件让它分析</li><li>复杂问题让它"思考一下"</li></ul></div>
+        </div>
+        
+        <div class="section">
+            <h2>💰 为什么这么便宜？</h2>
+            <table>
+                <tr><th>模型</th><th>输入价格</th><th>输出价格</th></tr>
+                <tr><td>DeepSeek V3</td><td>¥1/百万Token</td><td>¥2/百万Token</td></tr>
+                <tr><td>GPT-4o</td><td>约¥70/百万Token</td><td>约¥210/百万Token</td></tr>
+                <tr><td>Claude 4.5</td><td>约¥110/百万Token</td><td>约¥550/百万Token</td></tr>
+            </table>
+            <div class="highlight">DeepSeek价格只有GPT-4的<strong>1/70</strong>！</div>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 能做什么？</h2>
+            <h3>编程开发（最强大）</h3><ul><li>✅ 写代码、调试、优化</li><li>✅ 解释代码</li></ul>
+            <h3>内容创作</h3><ul><li>✅ 写文章、脚本、翻译</li></ul>
+            <h3>数据分析</h3><ul><li>✅ 分析文件、整理数据</li></ul>
+            <h3>学习辅助</h3><ul><li>✅ 解答问题、辅导作业</li></ul>
+        </div>
+        
+        <div class="section">
+            <h2>📢 用户评价</h2>
+            <div class="highlight"><p><strong>网友HCPTangHY：</strong>"测完直接懵了，已经逼近最顶流的Sonnet 4.6了"</p></div>
+            <div class="warning"><p><strong>⚠️ 注意：</strong>V4还未正式发布，以上为测试版信息。建议正式发布后再深度使用。</p></div>
+        </div>
+        
+        <div class="recommend">
+            <h3>⭐ 小白推荐指数</h3>
+            <div class="score">10/10</div>
+            <p>🔥 2026年最值得关注的AI模型</p>
+        </div>
+    </div>
+</body>
+</html>

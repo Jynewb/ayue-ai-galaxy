@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工具调研报告 - 2026年3月</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle { text-align: center; color: #888; margin-bottom: 30px; font-size: 1rem; }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.05);
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-number { font-size: 1.8rem; font-weight: bold; color: #00d4ff; }
+        .stat-label { color: #888; font-size: 0.85rem; }
+        
+        .category {
+            margin-bottom: 30px;
+        }
+        .category-title {
+            font-size: 1.3rem;
+            color: #7c3aed;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .tool-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px);
+            border-color: #00d4ff;
+            box-shadow: 0 10px 30px rgba(0,212,255,0.2);
+        }
+        .tool-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .tool-desc {
+            color: #aaa;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .tool-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tag {
+            background: rgba(124, 58, 237, 0.3);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+        }
+        .tag.free { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
+        .tag.paid { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; }
+        .tag.cn { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        .tag.us { background: rgba(138, 43, 226, 0.2); color: #8a2be2; }
+        
+        .recommend-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #666;
+            margin-top: 50px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI工具调研报告</h1>
+        <p class="subtitle">2026年3月 · 20个AI工具深度调研</p>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">20</div>
+                <div class="stat-label">工具总数</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">12</div>
+                <div class="stat-label">国产</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">8</div>
+                <div class="stat-label">国外</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">15</div>
+                <div class="stat-label">免费可用</div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-title">🔥 热门AI工具（推荐）</div>
+            <div class="tools-grid">
+                <a href="openclaw.html" class="tool-card">
+                    <div class="tool-name">OpenClaw <span class="recommend-badge">必学</span></div>
+                    <div class="tool-desc">开源智能体框架，GitHub 24.8万星登顶，支持微信/钉钉/飞书/Siri联动</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">Agent</span>
+                    </div>
+                </a>
+                
+                <a href="cursor.html" class="tool-card">
+                    <div class="tool-name">Cursor</div>
+                    <div class="tool-desc">AI代码编辑器，2.4版本支持云端代理、一键拆工、自动修复</div>
+                    <div class="tool-tags">
+                        <span class="tag paid">付费</span>
+                        <span class="tag us">国外</span>
+                        <span class="tag">编程</span>
+                    </div>
+                </a>
+                
+                <a href="deepseek_v4.html" class="tool-card">
+                    <div class="tool-name">DeepSeek V4 <span class="recommend-badge">热点</span></div>
+                    <div class="tool-desc">下周发布！1万亿参数、100万上下文、编程超越Claude</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">多模态</span>
+                    </div>
+                </a>
+                
+                <a href="seedance.html" class="tool-card">
+                    <div class="tool-name">Seedance 2.0</div>
+                    <div class="tool-desc">字节跳动AI视频生成，支持图/文/音/视频多模态输入</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">视频</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-title">💻 编程开发工具</div>
+            <div class="tools-grid">
+                <a href="claude_code.html" class="tool-card">
+                    <div class="tool-name">Claude Code</div>
+                    <div class="tool-desc">Anthropic推出的AI编程助手，2.1版本支持自主测试、代码审查</div>
+                    <div class="tool-tags">
+                        <span class="tag paid">付费</span>
+                        <span class="tag us">国外</span>
+                        <span class="tag">编程</span>
+                    </div>
+                </a>
+                
+                <a href="n8n.html" class="tool-card">
+                    <div class="tool-name">n8n</div>
+                    <div class="tool-desc">开源工作流自动化平台，8000+模板，支持AI Agent集成</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag us">国外</span>
+                        <span class="tag">自动化</span>
+                    </div>
+                </a>
+                
+                <a href="minimax.html" class="tool-card">
+                    <div class="tool-name">MiniMax M2.5</div>
+                    <div class="tool-desc">原生Agent生产级模型，编程SOTA，智能体1小时成本1美元</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费API</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">大模型</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-title">🧠 大语言模型</div>
+            <div class="tools-grid">
+                <a href="kimi.html" class="tool-card">
+                    <div class="tool-name">Kimi K2.5</div>
+                    <div class="tool-desc">月之暗面出品，估值超100亿美元，20天营收破纪录</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">多模态</span>
+                    </div>
+                </a>
+                
+                <a href="doubao.html" class="tool-card">
+                    <div class="tool-name">豆包 2.0</div>
+                    <div class="tool-desc">字节跳动大模型2.0发布，1万亿参数，视频图像全升级</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">大模型</span>
+                    </div>
+                </a>
+                
+                <a href="qwen.html" class="tool-card">
+                    <div class="tool-name">通义千问 Qwen</div>
+                    <div class="tool-desc">阿里AI，Qwen 3.5即将发布，被誉为国产开源之光</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">大模型</span>
+                    </div>
+                </a>
+                
+                <a href="glm.html" class="tool-card">
+                    <div class="tool-name">GLM-5</div>
+                    <div class="tool-desc">智谱AI发布，Agentic Engineering范式重构</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费API</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">大模型</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-title">🎨 图像生成工具</div>
+            <div class="tools-grid">
+                <a href="midjourney.html" class="tool-card">
+                    <div class="tool-name">Midjourney V7</div>
+                    <div class="tool-desc">渲染速度提升40%，新增用户投票功能，GlobalGPT无需Discord</div>
+                    <div class="tool-tags">
+                        <span class="tag paid">付费</span>
+                        <span class="tag us">国外</span>
+                        <span class="tag">图像</span>
+                    </div>
+                </a>
+                
+                <a href="stable_diffusion.html" class="tool-card">
+                    <div class="tool-name">Stable Diffusion 4</div>
+                    <div class="tool-desc">2026年发布，图像分辨率和质量显著提升，社区广泛采用</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag us">国外</span>
+                        <span class="tag">图像</span>
+                    </div>
+                </a>
+                
+                <a href="seedream.html" class="tool-card">
+                    <div class="tool-name">Seedream 5.0</div>
+                    <div class="tool-desc">字节跳动图像生成模型，即梦AI平台主推</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">图像</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-title">🎬 视频生成工具</div>
+            <div class="tools-grid">
+                <a href="pika.html" class="tool-card">
+                    <div class="tool-name">Pika 2.0</div>
+                    <div class="tool-desc">AI视频生成，2.2版本增强场景定制和视觉特效</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag us">国外</span>
+                        <span class="tag">视频</span>
+                    </div>
+                </a>
+                
+                <a href="runway.html" class="tool-card">
+                    <div class="tool-name">Runway Gen 4.5</div>
+                    <div class="tool-desc">57.1%用户无法分辨AI与真实视频，超越好莱坞标准</div>
+                    <div class="tool-tags">
+                        <span class="tag paid">付费</span>
+                        <span class="tag us">国外</span>
+                        <span class="tag">视频</span>
+                    </div>
+                </a>
+                
+                <a href="keling.html" class="tool-card">
+                    <div class="tool-name">可灵 3.0</div>
+                    <div class="tool-desc">快手AI视频，Kling 3.0 Pro全球视频生成榜单第一</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">视频</span>
+                    </div>
+                </a>
+                
+                <a href="jimeng.html" class="tool-card">
+                    <div class="tool-name">即梦 AI</div>
+                    <div class="tool-desc">字节跳动旗下，一键小说转短剧，Seedance 2.0入驻</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag cn">国产</span>
+                        <span class="tag">视频</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="category">
+            <div class="category-title">📚 效率工具</div>
+            <div class="tools-grid">
+                <a href="notebooklm.html" class="tool-card">
+                    <div class="tool-name">NotebookLM</div>
+                    <div class="tool-desc">Google AI研究助手，音频概述功能强大，资料转Podcast</div>
+                    <div class="tool-tags">
+                        <span class="tag free">免费</span>
+                        <span class="tag us">国外</span>
+                        <span class="tag">效率</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🤖 TAO小助理 · 2026年3月3日</p>
+            <p style="margin-top:10px;color:#666;font-size:0.85rem;">共20个工具，持续更新中...</p>
+        </div>
+    </div>
+</body>
+</html>
