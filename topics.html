@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的选题库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d9ff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00d9ff;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        .topic-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .topic-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(0,217,255,0.3);
+            transform: translateY(-2px);
+        }
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .topic-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .topic-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .type-problem { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .type-hot { background: rgba(251,191,36,0.2); color: #fbbf24; }
+        .type-deep { background: rgba(168,85,247,0.2); color: #a855f7; }
+        .topic-reason {
+            color: #00d9ff;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #00d9ff;
+        }
+        .section-title {
+            font-size: 0.85rem;
+            color: #666;
+            margin: 15px 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .section-content {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        ul, ol {
+            margin-left: 20px;
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        .highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .highlight-tag {
+            padding: 4px 10px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .priority {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .priority-high { background: rgba(239,68,68,0.3); color: #ef4444; }
+        .priority-medium { background: rgba(251,191,36,0.3); color: #fbbf24; }
+        .priority-low { background: rgba(34,197,94,0.3); color: #22c55e; }
+        .add-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d9ff, #a855f7);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,217,255,0.3);
+            transition: all 0.3s ease;
+        }
+        .add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,217,255,0.4);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 我的选题库</h1>
+            <p class="subtitle">AI内容创作选题储备 · 持续更新</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">选题总数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">问题解决型</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">热点结合型</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">深度教程型</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="topic-card">
+            <div class="topic-header">
+                <div>
+                    <h2 class="topic-title">OpenClaw安装全问题合集</h2>
+                    <span class="topic-type type-problem">问题解决型</span>
+                    <span class="priority priority-high">优先级：高</span>
+                </div>
+                <span style="color: #666; font-size: 0.85rem;">#001</span>
+            </div>
+            
+            <div class="topic-reason">
+                选题理由：从账号的私信和群聊可见，用户安装问题极多；延续置顶爆款"OpenClaw安装教程"的热度；直接回应用户反馈，增强粉丝粘性
+            </div>
+
+            <div class="section-title">📌 内容亮点</div>
+            <div class="section-content">
+                <ul>
+                    <li>真实问题：从"阿悦AI交流1/2/3群"中提取真实用户提问</li>
+                    <li>分类解答：环境配置(30%)、网络连接(25%)、模型加载(20%)、飞书集成(15%)、其他杂项(10%)</li>
+                    <li>互动设计：视频中设置"问题编号"，用户可按编号快速找到解决方案</li>
+                </ul>
+            </div>
+
+            <div class="section-title">🎬 制作技巧</div>
+            <div class="section-content">
+                <ul>
+                    <li>快节奏剪辑：每个问题解答控制在15-30秒</li>
+                    <li>视觉化呈现：用代码高亮、错误截图对比</li>
+                    <li>资源打包：提供问题解决checklist PDF</li>
+                </ul>
+            </div>
+
+            <div class="section-title">📈 预期收益</div>
+            <div class="section-content">
+                <ul>
+                    <li>完播率高：用户会看到底找自己的问题</li>
+                    <li>收藏率高：作为"工具书"被反复查看</li>
+                    <li>引流效果好：新用户遇到问题会搜到这个视频</li>
+                </ul>
+            </div>
+
+            <div class="section-title">⏰ 发布顺序建议</div>
+            <div class="section-content">
+                <ol>
+                    <li>先做方向三（问题解决型）：巩固现有粉丝</li>
+                    <li>接着方向一（热点结合型）：借助热点拉新</li>
+                    <li>最后方向二（深度教程型）：提升专业壁垒</li>
+                </ol>
+            </div>
+
+            <div class="highlights">
+                <span class="highlight-tag">#OpenClaw</span>
+                <span class="highlight-tag">#安装问题</span>
+                <span class="highlight-tag">#群聊资源</span>
+                <span class="highlight-tag">#工具书</span>
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-header">
+                <div>
+                    <h2 class="topic-title">OpenClaw 3.1更新了什么</h2>
+                    <span class="topic-type type-hot">热点结合型</span>
+                    <span class="priority priority-high">优先级：高</span>
+                </div>
+                <span style="color: #666; font-size: 0.85rem;">#002</span>
+            </div>
+            
+            <div class="topic-reason">
+                选题理由：25.2万星登顶GitHub历史第一；刚更新3.1版本新功能多；林亦LYi刚发过相关视频说明有热度
+            </div>
+
+            <div class="section-title">📌 核心内容</div>
+            <div class="section-content">
+                <ul>
+                    <li><strong>Apple Watch联动</strong>：抬腕批准AI操作、查看通知</li>
+                    <li><strong>WebSocket实时流</strong>：响应几乎无延迟</li>
+                    <li><strong>Claude 4.6自适应思考</strong>：AI自动根据任务难度调整思考深度</li>
+                    <li><strong>健康检查端点</strong>：Docker/K8s部署更稳定</li>
+                    <li><strong>25.2万星</strong>：超越React/Linux，GitHub历史第一</li>
+                </ul>
+            </div>
+
+            <div class="section-title">🎬 内容角度</div>
+            <div class="section-content">
+                <ul>
+                    <li>角度1：从"25万星登顶"切入，讲龙虾的里程碑</li>
+                    <li>角度2：实测WebSocket速度 vs 旧版SSE</li>
+                    <li>角度3：Apple Watch联动演示（抬腕批准操作）</li>
+                    <li>角度4：Claude 4.6自适应思考是什么</li>
+                </ul>
+            </div>
+
+            <div class="section-title">📈 预期收益</div>
+            <div class="section-content">
+                <ul>
+                    <li>蹭热点流量：刚更新热度高</li>
+                    <li>完播率高：新功能演示有看头</li>
+                    <li>收藏率高：工具更新教程有实用价值</li>
+                </ul>
+            </div>
+
+            <div class="section-title">⏰ 发布时机</div>
+            <div class="section-content">
+                越快越好，热点时效性强
+            </div>
+
+            <div class="highlights">
+                <span class="highlight-tag">#OpenClaw</span>
+                <span class="highlight-tag">#3.1更新</span>
+                <span class="highlight-tag">#AppleWatch</span>
+                <span class="highlight-tag">#GitHub第一</span>
+            </div>
+        </div>
+
+        <div class="topic-card">
+            <div class="topic-header">
+                <div>
+                    <h2 class="topic-title">DeepSeek V4 发布！编程能力超越Claude？</h2>
+                    <span class="topic-type type-hot">热点结合型</span>
+                    <span class="priority priority-high">优先级：极高</span>
+                </div>
+                <span style="color: #666; font-size: 0.85rem;">#003</span>
+            </div>
+            
+            <div class="topic-reason">
+                选题理由：下周发布，全网热议；编程能力超越Claude Opus 4.5；1万亿参数+100万上下文；国产AI里程碑
+            </div>
+
+            <div class="section-title">📌 核心信息</div>
+            <div class="section-content">
+                <ul>
+                    <li><strong>发布时间</strong>：下周（2026年3月第一周）</li>
+                    <li><strong>参数规模</strong>：1万亿（1T）</li>
+                    <li><strong>上下文</strong>：100万Token，比V3提升7倍</li>
+                    <li><strong>类型</strong>：原生多模态（图片+视频+文本）</li>
+                </ul>
+            </div>
+
+            <div class="section-title">📊 性能对比</div>
+            <div class="section-content">
+                <ul>
+                    <li>DeepSeek V4：83.7%（SWE-bench编程基准）</li>
+                    <li>Claude Opus 4.5：80.9%</li>
+                    <li>GPT-5.2：80%</li>
+                </ul>
+            </div>
+
+            <div class="section-title">🎬 内容角度</div>
+            <div class="section-content">
+                <ul>
+                    <li>角度1：编程实测对比 - 真的比Claude强？</li>
+                    <li>角度2：技术解读 - 1万亿参数+100万上下文是什么概念</li>
+                    <li>角度3：国产之光 - 中国AI逆袭</li>
+                    <li>角度4：应用场景 - 100万上下文能做什么</li>
+                </ul>
+            </div>
+
+            <div class="section-title">📝 建议标题</div>
+            <div class="section-content">
+                <ul>
+                    <li>"DeepSeek V4下周发布！编程能力超越Claude"</li>
+                    <li>"1万亿参数+100万上下文，DeepSeek V4有多强？"</li>
+                    <li>"国产AI逆袭！DeepSeek V4挑战Claude霸主地位"</li>
+                </ul>
+            </div>
+
+            <div class="section-title">⏰ 发布时机</div>
+            <div class="section-content">
+                越快越好！现在是最佳预热期
+            </div>
+
+            <div class="highlights">
+                <span class="highlight-tag">#DeepSeek</span>
+                <span class="highlight-tag">#V4</span>
+                <span class="highlight-tag">#编程之王</span>
+                <span class="highlight-tag">#国产AI</span>
+                <span class="highlight-tag">#Claude</span>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="add-btn" onclick="alert('请联系小助理添加新选题')">+</button>
+</body>
+</html>
