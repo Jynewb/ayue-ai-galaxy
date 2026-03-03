@@ -35,6 +35,8 @@
         .comparison-card.winner { border: 2px solid #00d4ff; }
         .comparison-card .model { font-size: 1.2rem; font-weight: bold; margin-bottom: 10px; }
         .comparison-card .score { font-size: 2rem; color: #00d4ff; }
+        code { background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 4px; font-family: monospace; }
+        .tech-box { background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(0,212,255,0.1)); border: 1px solid rgba(124,58,237,0.3); border-radius: 12px; padding: 20px; margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -61,13 +63,25 @@
         </div>
         
         <div class="section">
-            <h2>🚀 为什么这么强？</h2>
+            <h2>🚀 为什么这么强？核心技术解析</h2>
+            
+            <div class="tech-box">
+                <h3>🔬 Engram模块 - 革命性记忆技术</h3>
+                <p>梁文锋署名的新论文提出了全新的<strong>Engram模块</strong>，解决了Transformer的记忆难题：</p>
+                <ul>
+                    <li><strong>O(1)时间复杂度</strong>：知识查找像查字典一样快</li>
+                    <li><strong>条件记忆</strong>：与MoE条件计算互补</li>
+                    <li><strong>U形Scaling Law</strong>：MoE与Engram结合达到最优</li>
+                </ul>
+            </div>
+            
             <h3>编程能力登顶世界第一</h3>
             <div class="comparison">
                 <div class="comparison-card winner"><div class="model">DeepSeek V4</div><div class="score">83.7%</div><div>🏆 第一名</div></div>
                 <div class="comparison-card"><div class="model">Claude Opus 4.5</div><div class="score">80.9%</div><div>🥈 第二名</div></div>
                 <div class="comparison-card"><div class="model">GPT-5.2</div><div class="score">80%</div><div>🥉 第三名</div></div>
             </div>
+            
             <h3>100万Token上下文是什么概念？</h3>
             <ul>
                 <li>📚 可以一次性读完整本《三体》小说</li>
@@ -75,7 +89,27 @@
                 <li>💻 可以理解整个代码仓库的所有文件</li>
                 <li>📝 之前V3只有12.8万Token，现在提升了<strong>7倍</strong></li>
             </ul>
-            <div class="highlight"><strong>重大突破！</strong>DeepSeek V4专门为华为昇腾等国产芯片优化，是中国首个完全基于国产算力的大模型。</div>
+            
+            <div class="highlight">
+                <strong>重大突破！</strong>DeepSeek V4专门为华为昇腾等国产芯片优化，是中国首个完全基于国产算力的大模型。这意味着：
+                <ul>
+                    <li>✅ 不再依赖英伟达GPU</li>
+                    <li>✅ 中国AI产业链自主可控</li>
+                    <li>✅ 推理成本更低</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>💰 定价预测（参考V3）</h2>
+            <table>
+                <tr><th>模型</th><th>输入价格</th><th>输出价格</th></tr>
+                <tr><td>DeepSeek V3</td><td>¥1/百万Token</td><td>¥2/百万Token</td></tr>
+                <tr><td>DeepSeek R1</td><td>¥4/百万Token</td><td>¥16/百万Token</td></tr>
+                <tr><td>GPT-4o</td><td>约¥70/百万Token</td><td>约¥210/百万Token</td></tr>
+                <tr><td>Claude 4.5</td><td>约¥110/百万Token</td><td>约¥550/百万Token</td></tr>
+            </table>
+            <div class="highlight">DeepSeek的价格只有GPT-4的<strong>1/70</strong>！这就是为什么它被称为"价格屠夫"。</div>
         </div>
         
         <div class="section">
@@ -90,17 +124,6 @@ response = client.chat.completions.create(model="deepseek-chat", messages=[{"rol
         </div>
         
         <div class="section">
-            <h2>💰 为什么这么便宜？</h2>
-            <table>
-                <tr><th>模型</th><th>输入价格</th><th>输出价格</th></tr>
-                <tr><td>DeepSeek V3</td><td>¥1/百万Token</td><td>¥2/百万Token</td></tr>
-                <tr><td>GPT-4o</td><td>约¥70/百万Token</td><td>约¥210/百万Token</td></tr>
-                <tr><td>Claude 4.5</td><td>约¥110/百万Token</td><td>约¥550/百万Token</td></tr>
-            </table>
-            <div class="highlight">DeepSeek价格只有GPT-4的<strong>1/70</strong>！</div>
-        </div>
-        
-        <div class="section">
             <h2>🎯 能做什么？</h2>
             <h3>编程开发（最强大）</h3><ul><li>✅ 写代码、调试、优化</li><li>✅ 解释代码</li></ul>
             <h3>内容创作</h3><ul><li>✅ 写文章、脚本、翻译</li></ul>
@@ -110,7 +133,7 @@ response = client.chat.completions.create(model="deepseek-chat", messages=[{"rol
         
         <div class="section">
             <h2>📢 用户评价</h2>
-            <div class="highlight"><p><strong>网友HCPTangHY：</strong>"测完直接懵了，已经逼近最顶流的Sonnet 4.6了"</p></div>
+            <div class="highlight"><p><strong>知乎网友HCPTangHY：</strong>"测完直接懵了，已经逼近最顶流的Sonnet 4.6了"</p></div>
             <div class="warning"><p><strong>⚠️ 注意：</strong>V4还未正式发布，以上为测试版信息。建议正式发布后再深度使用。</p></div>
         </div>
         

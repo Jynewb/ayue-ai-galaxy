@@ -33,12 +33,13 @@
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
         .feature-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; text-align: center; }
         .feature-card .icon { font-size: 2rem; margin-bottom: 10px; }
+        .version-tag { display: inline-block; background: linear-gradient(135deg, #00d4ff, #7c3aed); padding: 3px 10px; border-radius: 8px; font-size: 0.8rem; margin-left: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="index.html" class="back">← 返回总览</a>
-        <h1>🔧 OpenClaw 终极指南</h1>
+        <h1>🔧 OpenClaw 终极指南 <span class="version-tag">v2026.3.2</span></h1>
         <p class="subtitle">GitHub 24.8万星 · 史上增长最快开源项目</p>
         <div style="margin-bottom: 20px;">
             <span class="badge">🔥 流量密码</span>
@@ -55,7 +56,17 @@
         </div>
         
         <div class="section">
-            <h2>✨ 能做什么？</h2>
+            <h2>✨ 2026年3月最新更新（v2026.3.2）</h2>
+            <ul>
+                <li><strong>原生PDF分析工具</strong>：支持Anthropic和Google作为后端</li>
+                <li><strong>150+ Bug修复</strong>：由93位贡献者参与</li>
+                <li><strong>SecretRef凭证引用机制</strong>：安全性增强</li>
+                <li><strong>可配置提取策略</strong>：支持页数/大小限制</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>🔥 核心功能一览</h2>
             <div class="feature-grid">
                 <div class="feature-card"><div class="icon">🌐</div><div>访问网页</div></div>
                 <div class="feature-card"><div class="icon">📧</div><div>处理邮件</div></div>
@@ -64,19 +75,6 @@
                 <div class="feature-card"><div class="icon">💻</div><div>写代码</div></div>
                 <div class="feature-card"><div class="icon">📱</div><div>控制手机</div></div>
             </div>
-        </div>
-        
-        <div class="section">
-            <h2>🔥 2026年3月最新更新（3.1版本）</h2>
-            <ul>
-                <li><strong>智能体推理默认优化</strong>：不同模型有不同脾气，可以精细化配置</li>
-                <li><strong>企业级运行架构</strong>：支持Docker、Kubernetes部署，自动扩缩容</li>
-                <li><strong>Android节点</strong>：手机也能成为AI节点</li>
-                <li><strong>多平台联动</strong>：微信、钉钉、飞书、Siri四大入口</li>
-                <li><strong>8000+开箱即用Skill</strong>：社区技能市场ClawHub</li>
-                <li><strong>语音消息</strong>：支持发送语音消息</li>
-                <li><strong>互动组件</strong>：支持交互式UI组件</li>
-            </ul>
         </div>
         
         <div class="section">
@@ -99,14 +97,6 @@ pnpm start</pre></div>
         </div>
         
         <div class="section">
-            <h2>🔗 接入飞书/微信/钉钉</h2>
-            <div class="step"><div class="step-number">1</div><strong>飞书配置</strong>：创建企业应用 → 获取App ID和Secret → 配置权限 → 填写到OpenClaw配置</div>
-            <div class="step"><div class="step-number">2</div><strong>微信配置</strong>：注册企业微信 → 创建应用 → 获取API权限</div>
-            <div class="step"><div class="step-number">3</div><strong>钉钉配置</strong>：创建钉钉应用 → 开启机器人 → 获取Webhook地址</div>
-            <div class="tips"><div class="tips-title">💡 提示</div>具体配置教程可以参考官方文档或社区教程</div>
-        </div>
-        
-        <div class="section">
             <h2>💰 需要花多少钱？</h2>
             <table>
                 <tr><th>项目</th><th>费用</th><th>说明</th></tr>
@@ -118,35 +108,13 @@ pnpm start</pre></div>
         </div>
         
         <div class="section">
-            <h2>🎯 适合谁用？</h2>
-            <ul>
-                <li>✅ <strong>技术人员</strong>：自动化工作流、代码管理</li>
-                <li>✅ <strong>内容创作者</strong>：批量处理素材、自动发布</li>
-                <li>✅ <strong>企业用户</strong>：私有化部署、智能客服</li>
-                <li>✅ <strong>开发者</strong>：学习Agent开发、定制自己的AI助手</li>
-            </ul>
-        </div>
-        
-        <div class="section">
             <h2>⚠️ 注意事项</h2>
             <div class="warning">
                 <ul>
                     <li><strong>安全风险</strong>：OpenClaw可以操作电脑，请谨慎授权</li>
                     <li><strong>API密钥</strong>：不要把API Key分享给他人</li>
                     <li><strong>隐私</strong>：本地部署更安全</li>
-                    <li><strong>仍在beta</strong>：可能会有bug</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h2>🔮 为什么这么火？</h2>
-            <div class="highlight">
-                <ul>
-                    <li><strong>GitHub第一</strong>：24.8万星超越Linux</li>
-                    <li><strong>国产之光</strong>：中国团队开发</li>
-                    <li><strong>真正能干活</strong>：不仅是问答，还能执行任务</li>
-                    <li><strong>生态繁荣</strong>：8000+技能、活跃社区</li>
+                    <li><strong>恶意技能</strong>：2026年2月发现ClawHavoc攻击，注意技能来源</li>
                 </ul>
             </div>
         </div>
