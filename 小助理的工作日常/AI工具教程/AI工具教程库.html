@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工具教程库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e4e4e7;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: #71717a;
+            margin-bottom: 40px;
+        }
+        .category {
+            margin-bottom: 40px;
+        }
+        .category h2 {
+            color: #00d4ff;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #7c3aed;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .tool-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            border-color: #7c3aed;
+            box-shadow: 0 10px 40px rgba(124,58,237,0.2);
+        }
+        .tool-card h3 {
+            color: #fff;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+        .tool-card .tag {
+            display: inline-block;
+            background: #7c3aed;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-bottom: 12px;
+        }
+        .tool-card p {
+            color: #a1a1aa;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .tool-card .code {
+            background: #1e1e2e;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+            margin-bottom: 12px;
+            color: #a6accd;
+        }
+        .tool-card a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        .tool-card a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #71717a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 AI工具教程库</h1>
+        <p class="subtitle">本地运行AI模型工具教程集合 | 最后更新：2026-03-03</p>
+        
+        <div class="category">
+            <h2>📦 本地大模型运行工具</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>1. Ollama</h3>
+                    <span class="tag">最流行</span>
+                    <p>在本地运行Kimi、GLM、MiniMax、DeepSeek等大模型</p>
+                    <div class="code"># 安装
+curl -fsSL https://ollama.com/install.sh | sh
+
+# 运行模型
+ollama run gemma3</div>
+                    <p><a href="https://ollama.com" target="_blank">官网</a> | <a href="https://github.com/ollama/ollama" target="_blank">GitHub</a> | <a href="https://docs.ollama.com" target="_blank">文档</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>2. LM Studio</h3>
+                    <span class="tag">易上手</span>
+                    <p>本地运行AI模型，支持Kimi、Claude、GPT等</p>
+                    <div class="code"># macOS / Linux
+curl -fsSL https://lmstudio.ai/install.sh | bash
+
+# Windows
+irm https://lmstudio.ai/install.ps1 | iex</div>
+                    <p><a href="https://lmstudio.ai" target="_blank">官网</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>3. Jan</h3>
+                    <span class="tag">开源替代</span>
+                    <p>开源ChatGPT替代，5.2M下载，支持本地和在线模型</p>
+                    <div class="code"># 下载
+https://jan.ai/download
+
+# 支持的模型
+OpenAI, Claude, Gemini, Llama, Mistral, Qwen, DeepSeek, Gemma, Kimi</div>
+                    <p><a href="https://jan.ai" target="_blank">官网</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>4. Text Generation Webui</h3>
+                    <span class="tag">老牌</span>
+                    <p>最权威的本地AI Web UI，功能强大</p>
+                    <div class="code"># GitHub
+https://github.com/oobabooga/text-generation-webui</div>
+                    <p><a href="https://github.com/oobabooga/text-generation-webui" target="_blank">GitHub</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>🔧 模型微调工具</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>5. Unsloth</h3>
+                    <span class="tag">加速30倍</span>
+                    <p>AI模型微调工具，30倍速度提升，90%更少显存</p>
+                    <div class="code"># 免费使用
+Google Colab
+Kaggle Notebooks
+
+# 特点
+- 30x快于Flash Attention 2
+- 支持NVIDIA T4到H100
+- 支持AMD和Intel GPU</div>
+                    <p><a href="https://unsloth.ai" target="_blank">官网</a> | <a href="https://github.com/unslothai/unsloth" target="_blank">GitHub</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>🧠 RAG知识库工具</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>6. MaxKB</h3>
+                    <span class="tag">开箱即用</span>
+                    <p>开箱即用的RAG聊天机器人，一键部署</p>
+                    <div class="code"># GitHub
+https://github.com/1Panel-dev/MaxKB/</div>
+                    <p><a href="https://github.com/1Panel-dev/MaxKB/" target="_blank">GitHub</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>7. RAGFlow</h3>
+                    <span class="tag">深度理解</span>
+                    <p>基于深度文档理解的RAG引擎</p>
+                    <div class="code"># GitHub
+https://github.com/infiniflow/ragflow</div>
+                    <p><a href="https://github.com/infiniflow/ragflow" target="_blank">GitHub</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>💻 代码编辑器集成</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>8. Cline</h3>
+                    <span class="tag">VS Code</span>
+                    <p>VS Code扩展，多文件/全代码库编程</p>
+                    <div class="code"># GitHub
+https://github.com/cline/cline</div>
+                    <p><a href="https://github.com/cline/cline" target="_blank">GitHub</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>9. Continue</h3>
+                    <span class="tag">多IDE</span>
+                    <p>开源AI代码助手，支持多种IDE</p>
+                    <div class="code"># GitHub
+https://github.com/continuedev/continue</div>
+                    <p><a href="https://github.com/continuedev/continue" target="_blank">GitHub</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>10. Void / OpenCode</h3>
+                    <span class="tag">Cursor替代</span>
+                    <p>开源AI代码编辑器，Cursor替代</p>
+                    <div class="code"># GitHub
+https://github.com/voideditor/void</div>
+                    <p><a href="https://github.com/voideditor/void" target="_blank">GitHub</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>📱 桌面客户端</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>11. AnythingLLM</h3>
+                    <span class="tag">全平台</span>
+                    <p>Mac/Windows/Linux全平台AI应用</p>
+                    <p><a href="https://github.com/Mintplex-Labs/anything-llm" target="_blank">GitHub</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>12. Cherry Studio</h3>
+                    <span class="tag">多提供商</span>
+                    <p>多提供商桌面客户端</p>
+                    <p><a href="https://github.com/kangfenmao/cherry-studio" target="_blank">GitHub</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>🌐 Web界面</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>13. Open WebUI</h3>
+                    <span class="tag">可扩展</span>
+                    <p>可扩展的自托管AI界面</p>
+                    <div class="code"># Docker部署
+docker run -d -p 3000:8080 \
+  --add-host=host.docker.internal:host-gateway \
+  -v open-webui:/app/backend/data \
+  --name open-webui \
+  ghcr.io/open-webui/open-webui:main</div>
+                    <p><a href="https://github.com/open-webui/open-webui" target="_blank">GitHub</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>14. Lobe Chat</h3>
+                    <span class="tag">现代化</span>
+                    <p>现代聊天框架，插件生态丰富</p>
+                    <p><a href="https://github.com/lobehub/lobe-chat" target="_blank">GitHub</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>15. LibreChat</h3>
+                    <span class="tag">多提供商</span>
+                    <p>增强版ChatGPT，多提供商支持</p>
+                    <p><a href="https://github.com/danny-avila/LibreChat" target="_blank">GitHub</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>🔌 开发者SDK</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>16. LangChain</h3>
+                    <span class="tag">Python</span>
+                    <p>调用Ollama示例</p>
+                    <div class="code">from langchain.chat_models import ChatOllama
+llm = ChatOllama(model="gemma3")
+response = llm.invoke("Hello")</div>
+                    <p><a href="https://python.langchain.com" target="_blank">官网</a></p>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>17. LiteLLM</h3>
+                    <span class="tag">统一API</span>
+                    <p>统一API for 100+ LLM提供商</p>
+                    <p><a href="https://github.com/BerriAI/litellm" target="_blank">GitHub</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2>🚀 Docker一键部署</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>Ollama Docker</h3>
+                    <div class="code">docker run -d -v ollama:/root/.ollama \
+  -p 11434:11434 --name ollama \
+  ollama/ollama</div>
+                </div>
+                
+                <div class="tool-card">
+                    <h3>Open WebUI Docker</h3>
+                    <div class="code">docker run -d -p 3000:8080 \
+  -v open-webui:/app/backend/data \
+  --name open-webui \
+  ghcr.io/open-webui/open-webui:main</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🤖 AI工具教程库 | 持续更新中</p>
+        </div>
+    </div>
+</body>
+</html>

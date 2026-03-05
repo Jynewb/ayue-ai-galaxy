@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw 安装配置指南</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e4e4e7;
+            line-height: 1.8;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle { text-align: center; color: #94a3b8; margin-bottom: 40px; }
+        .version { text-align: center; color: #64748b; font-size: 0.9em; margin-bottom: 30px; }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card h2 {
+            color: #00d2ff;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card h2 .num {
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            color: #1a1a2e;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .card h3 { color: #f472b6; font-size: 1.1em; margin: 20px 0 12px; }
+        .step {
+            background: rgba(0,210,255,0.1);
+            border-left: 4px solid #00d2ff;
+            padding: 16px 20px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        code {
+            background: rgba(0,0,0,0.4);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: "Consolas", monospace;
+            font-size: 0.9em;
+            color: #fbbf24;
+        }
+        pre {
+            background: rgba(0,0,0,0.5);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+        pre code { background: none; padding: 0; color: #a5f3fc; }
+        .warning {
+            background: rgba(251,191,36,0.15);
+            border: 1px solid rgba(251,191,36,0.3);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .warning-title { color: #fbbf24; font-weight: bold; margin-bottom: 8px; }
+        .success { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .success-title { color: #22c55e; font-weight: bold; margin-bottom: 8px; }
+        footer { text-align: center; padding: 40px 0; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 OpenClaw</h1>
+        <p class="subtitle">Windows 安装配置指南</p>
+        <p class="version">版本 5.0 | 作者：TAO小助理</p>
+
+        <div class="card">
+            <h2><span class="num">1</span> 运行安装脚本</h2>
+
+            <h3>1.1 双击运行脚本</h3>
+            <div class="step">解压安装包后，双击运行 <code>Install.bat</code></div>
+
+            <h3>1.2 自动检查环境</h3>
+            <div class="step">脚本会自动检查并安装：Node.js、pnpm、OpenClaw</div>
+
+            <h3>1.3 选择 AI 模型</h3>
+            <div class="step">
+                输入数字选择模型（已测试可用）：<br>
+                - 1. MiniMax M2.5 (Standard)<br>
+                - 2. MiniMax M2.5 HighSpeed<br>
+                - 3. Qwen3.5 (Free)<br>
+                - 4. Kimi K2.5<br>
+                - 5. DeepSeek V3<br>
+                - 6. GPT-4o<br>
+                - 7. Claude 4<br>
+                - 8. Gemini 2.5 Pro<br>
+                - 9. GLM-5
+            </div>
+
+            <h3>1.4 输入 API Key</h3>
+            <div class="step">输入对应模型的 API Key（如已测试通过的 DeepSeek）</div>
+
+            <h3>1.5 输入飞书 App ID</h3>
+            <div class="step">这里先留空，我们先到飞书开放者后台</div>
+        </div>
+
+        <div class="card">
+            <h2><span class="num">2</span> 创建飞书应用</h2>
+
+            <h3>2.1 创建企业自建应用</h3>
+            <div class="step">
+                1. 打开 <a href="https://open.feishu.cn/" target="_blank" style="color:#00d2ff;">https://open.feishu.cn/</a><br>
+                2. 点击「创建企业自建应用」<br>
+                3. 填写应用名称（如「我的AI助手」）<br>
+                4. 点击「创建」
+            </div>
+
+            <h3>2.2 添加机器人</h3>
+            <div class="step">
+                1. 点击左侧「添加应用能力」<br>
+                2. 点击「按能力添加」<br>
+                3. 找到「机器人」卡片，点击「添加」→ 确认
+            </div>
+
+            <h3>2.3 获取凭证</h3>
+            <div class="step">
+                1. 点击左侧「凭证与基础信息」<br>
+                2. 复制「App ID」和「App Secret」
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="num">3</span> 开通权限</h2>
+
+            <h3>3.1 批量导入权限</h3>
+            <div class="step">
+                1. 点击左侧「权限管理」<br>
+                2. 点击右上角「批量导入/导出权限」<br>
+                3. 粘贴以下 JSON：
+                <pre><code>{
+  "scopes": {
+    "tenant": [
+      "im:message",
+      "im:message.p2p_msg:readonly",
+      "im:message.group_at_msg:readonly",
+      "im:message:send_as_bot",
+      "contact:contact.base:readonly",
+      "contact:user.base:readonly"
+    ]
+  }
+}</code></pre>
+                4. 点击「下一步」→「确认新增权限」→「申请开通」
+            </div>
+
+            <h3>3.2 发布应用</h3>
+            <div class="step">
+                1. 点击左侧「版本管理与发布」<br>
+                2. 点击「创建版本」<br>
+                3. 版本号填 <code>1.0.0</code><br>
+                4. 点击「保存」→「发布」
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><span class="num">4</span> 继续配置</h2>
+
+            <h3>4.1 回到命令窗口</h3>
+            <div class="step">此时安装脚本会等待，输入之前复制的：<br>
+                1. 飞书 App ID<br>
+                2. 飞书 App Secret<br>
+                等待自动配置完成
+            </div>
+
+            <h3>4.2 配置长连接</h3>
+            <div class="step">
+                1. 回到飞书后台，点击「事件与回调」<br>
+                2. 「订阅方式」选择「长连接」<br>
+                3. 点击「保存」（此时 Gateway 需保持运行）
+            </div>
+
+            <h3>4.3 添加接收消息事件</h3>
+            <div class="step">
+                1. 点击「添加事件」<br>
+                2. 搜索 <code>im.message.receive_v1</code><br>
+                3. 勾选后点击「确定」
+            </div>
+
+            <h3>4.4 重新发布</h3>
+            <div class="step">点击「版本管理与发布」，再次点击「发布」</div>
+        </div>
+
+        <div class="card">
+            <h2><span class="num">5</span> 授权与启动</h2>
+
+            <h3>5.1 飞书对话</h3>
+            <div class="step">
+                1. 在飞书和机器人对话<br>
+                2. 它会回复你一个飞书匹配 ID
+            </div>
+
+            <h3>5.2 飞书授权</h3>
+            <div class="step">
+                1. 新打开一个命令提示符<br>
+                2. 将机器人回复的那段授权命令复制进去<br>
+                3. 执行授权
+            </div>
+
+            <h3>5.3 重启 Gateway</h3>
+            <div class="step">
+                1. 关闭所有命令窗口<br>
+                2. 重新打开命令提示符<br>
+                3. 输入 <code>openclaw gateway</code> 启动
+            </div>
+
+            <div class="success">
+                <div class="success-title">🎉 配置完成！</div>
+                现在可以在飞书发消息和 AI 对话了！
+            </div>
+        </div>
+
+        <footer><p>祝你使用愉快！🚀</p></footer>
+    </div>
+</body>
+</html>
