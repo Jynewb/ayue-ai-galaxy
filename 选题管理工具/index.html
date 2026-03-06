@@ -586,9 +586,27 @@
         ];
 
         const STORAGE_KEY = 'content_topics';
+        const JSON_FILE = 'topics.json';
 
-        function loadTopics() {
-            // 强制重新加载初始数据（临时修复）
+        // 从外部JSON文件加载选题
+        async function loadTopicsFromJSON() {
+            try {
+                const response = await fetch(JSON_FILE);
+                const data = await response.json();
+                return data.topics || [];
+            } catch (error) {
+                console.log('无法加载外部JSON，使用localStorage:', error);
+                return null;
+            }
+        }
+
+        async function loadTopics() {
+            // 优先尝试从外部JSON加载
+            const jsonTopics = await loadTopicsFromJSON();
+            if (jsonTopics && jsonTopics.length > 0) {
+                return jsonTopics;
+            }
+            // 回退到localStorage
             const stored = localStorage.getItem(STORAGE_KEY);
             const forceReload = !stored || JSON.parse(stored).length < 7;
 
