@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选题管理工具</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d9ff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .subtitle { color: #888; font-size: 0.9rem; }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00d9ff;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .filters-bar {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .filter-label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        .filter-select, .search-input {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .filter-select:focus, .search-input:focus {
+            border-color: #00d4ff;
+            background: rgba(255,255,255,0.15);
+        }
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .topic-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .topic-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(0,217,255,0.3);
+            transform: translateY(-2px);
+        }
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .topic-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .topic-meta {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .topic-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .type-problem { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .type-hot { background: rgba(251,191,36,0.2); color: #fbbf24; }
+        .type-deep { background: rgba(168,85,247,0.2); color: #a855f7; }
+        .priority {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .priority-high { background: rgba(239,68,68,0.3); color: #ef4444; }
+        .priority-medium { background: rgba(251,191,36,0.3); color: #fbbf24; }
+        .priority-low { background: rgba(34,197,94,0.3); color: #22c55e; }
+        .score-badge {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .topic-reason {
+            color: #00d9ff;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #00d9ff;
+        }
+        .topic-details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .topic-details.show { display: block; }
+        .detail-section {
+            margin-bottom: 15px;
+        }
+        .detail-title {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .detail-content {
+            color: #aaa;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .detail-content ul {
+            margin-left: 20px;
+        }
+        .topic-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .topic-tag {
+            padding: 4px 10px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            color: #fff;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .btn-danger {
+            background: rgba(239,68,68,0.3);
+            color: #ef4444;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .add-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d9ff, #a855f7);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,217,255,0.3);
+            transition: all 0.3s ease;
+            z-index: 50;
+        }
+        .add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,217,255,0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close-btn:hover { color: #fff; }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .form-label .required {
+            color: #ef4444;
+            margin-left: 4px;
+        }
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: #00d4ff;
+            background: rgba(255,255,255,0.15);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .filters-bar { flex-direction: column; align-items: stretch; }
+            .filter-group { flex-direction: column; align-items: stretch; }
+            .search-input { min-width: 100%; }
+            .topic-header { flex-direction: column; gap: 10px; }
+            .add-btn { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 我的选题库</h1>
+            <p class="subtitle">AI内容创作选题储备 · 持续更新</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-total">0</div>
+                    <div class="stat-label">选题总数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-problem">0</div>
+                    <div class="stat-label">问题解决型</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-hot">0</div>
+                    <div class="stat-label">热点结合型</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="stat-deep">0</div>
+                    <div class="stat-label">深度教程型</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters-bar">
+            <div class="filter-group">
+                <span class="filter-label">类型:</span>
+                <select class="filter-select" id="filter-type">
+                    <option value="all">全部</option>
+                    <option value="problem">问题解决型</option>
+                    <option value="hot">热点结合型</option>
+                    <option value="deep">深度教程型</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">优先级:</span>
+                <select class="filter-select" id="filter-priority">
+                    <option value="all">全部</option>
+                    <option value="high">高</option>
+                    <option value="medium">中</option>
+                    <option value="low">低</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">排序:</span>
+                <select class="filter-select" id="filter-sort">
+                    <option value="score">推荐分数</option>
+                    <option value="created">创建时间</option>
+                    <option value="priority">优先级</option>
+                </select>
+            </div>
+            <input type="text" class="search-input" id="search-input" placeholder="搜索标题或标签...">
+        </div>
+
+        <div id="topics-list"></div>
+
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <div class="empty-state-icon">📝</div>
+            <p>还没有选题，点击右下角的 + 按钮添加第一个选题吧！</p>
+        </div>
+    </div>
+
+    <button class="add-btn" id="add-btn">+</button>
+
+    <div class="modal" id="topic-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">添加选题</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <form id="topic-form">
+                <input type="hidden" id="topic-id">
+
+                <div class="form-group">
+                    <label class="form-label">标题<span class="required">*</span></label>
+                    <input type="text" class="form-input" id="topic-title" required minlength="2" maxlength="50">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">类型<span class="required">*</span></label>
+                    <select class="form-select" id="topic-type" required>
+                        <option value="">请选择</option>
+                        <option value="problem">问题解决型</option>
+                        <option value="hot">热点结合型</option>
+                        <option value="deep">深度教程型</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">优先级<span class="required">*</span></label>
+                    <select class="form-select" id="topic-priority" required>
+                        <option value="">请选择</option>
+                        <option value="high">高</option>
+                        <option value="medium">中</option>
+                        <option value="low">低</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">选题理由<span class="required">*</span></label>
+                    <textarea class="form-textarea" id="topic-reason" required minlength="10"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">内容亮点 (可选，每行一个)</label>
+                    <textarea class="form-textarea" id="topic-highlights" placeholder="例如：真实问题：从群聊中提取真实用户提问"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">制作技巧 (可选，每行一个)</label>
+                    <textarea class="form-textarea" id="topic-techniques" placeholder="例如：快节奏剪辑：每个问题解答控制在15-30秒"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">预期收益 (可选，每行一个)</label>
+                    <textarea class="form-textarea" id="topic-benefits" placeholder="例如：完播率高：用户会看到底找自己的问题"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">标签 (可选，用逗号分隔)</label>
+                    <input type="text" class="form-input" id="topic-tags" placeholder="例如：#OpenClaw, #安装问题, #工具书">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const initialTopics = [
+            {
+                id: 'topic_001',
+                title: 'OpenClaw安装全问题合集',
+                type: 'problem',
+                priority: 'high',
+                reason: '从账号的私信和群聊可见，用户安装问题极多；延续置顶爆款"OpenClaw安装教程"的热度；直接回应用户反馈，增强粉丝粘性',
+                content: {
+                    highlights: ['真实问题：从"阿悦AI交流1/2/3群"中提取真实用户提问', '分类解答：环境配置(30%)、网络连接(25%)、模型加载(20%)、飞书集成(15%)、其他杂项(10%)', '互动设计：视频中设置"问题编号"，用户可按编号快速找到解决方案'],
+                    techniques: ['快节奏剪辑：每个问题解答控制在15-30秒', '视觉化呈现：用代码高亮、错误截图对比', '资源打包：提供问题解决checklist PDF'],
+                    benefits: ['完播率高：用户会看到底找自己的问题', '收藏率高：作为"工具书"被反复查看', '引流效果好：新用户遇到问题会搜到这个视频']
+                },
+                tags: ['#OpenClaw', '#安装问题', '#群聊资源', '#工具书'],
+                createdAt: '2026-03-01T10:00:00Z',
+                updatedAt: '2026-03-01T10:00:00Z'
+            },
+            {
+                id: 'topic_002',
+                title: 'OpenClaw 3.1更新了什么',
+                type: 'hot',
+                priority: 'high',
+                reason: '25.2万星登顶GitHub历史第一；刚更新3.1版本新功能多；林亦LYi刚发过相关视频说明有热度',
+                content: {
+                    highlights: ['Apple Watch联动：抬腕批准AI操作、查看通知', 'WebSocket实时流：响应几乎无延迟', 'Claude 4.6自适应思考：AI自动根据任务难度调整思考深度', '健康检查端点：Docker/K8s部署更稳定', '25.2万星：超越React/Linux，GitHub历史第一'],
+                    techniques: ['角度1：从"25万星登顶"切入，讲龙虾的里程碑', '角度2：实测WebSocket速度 vs 旧版SSE', '角度3：Apple Watch联动演示（抬腕批准操作）', '角度4：Claude 4.6自适应思考是什么'],
+                    benefits: ['蹭热点流量：刚更新热度高', '完播率高：新功能演示有看头', '收藏率高：工具更新教程有实用价值']
+                },
+                tags: ['#OpenClaw', '#3.1更新', '#AppleWatch', '#GitHub第一'],
+                createdAt: '2026-03-02T10:00:00Z',
+                updatedAt: '2026-03-02T10:00:00Z'
+            },
+            {
+                id: 'topic_003',
+                title: 'DeepSeek V4 发布！编程能力超越Claude？',
+                type: 'hot',
+                priority: 'high',
+                reason: '下周发布，全网热议；编程能力超越Claude Opus 4.5；1万亿参数+100万上下文；国产AI里程碑',
+                content: {
+                    highlights: ['发布时间：下周（2026年3月第一周）', '参数规模：1万亿（1T）', '上下文：100万Token，比V3提升7倍', '类型：原生多模态（图片+视频+文本）'],
+                    techniques: ['角度1：编程实测对比 - 真的比Claude强？', '角度2：技术解读 - 1万亿参数+100万上下文是什么概念', '角度3：国产之光 - 中国AI逆袭', '角度4：应用场景 - 100万上下文能做什么'],
+                    benefits: ['蹭热点流量：现在是最佳预热期', '话题性强：编程超越Claude引发讨论', '收藏率高：技术解读有深度']
+                },
+                tags: ['#DeepSeek', '#V4', '#编程之王', '#国产AI', '#Claude'],
+                createdAt: '2026-03-03T10:00:00Z',
+                updatedAt: '2026-03-03T10:00:00Z'
+            },
+            {
+                id: 'topic_005',
+                title: 'ZeroClaw: 23K星的开源AI基础设施',
+                type: 'deep',
+                priority: 'high',
+                reason: '23,523星热度飙升；极简Rust实现；$10硬件就能运行；符合"免费+本地"爆款公式',
+                content: {
+                    highlights: ['内存占用：<5MB（比OpenClaw省99%）', '启动速度：<10ms毫秒级冷启动', '硬件成本：$10开发板就能运行', '语言：100% Rust实现', '热度：23,523 ⭐（2026-02-13创建）'],
+                    techniques: ['角度1：$10硬件运行AI助手 - 边缘设备新选择', '角度2：安装教程 - 一键部署', '角度3：vs OpenClaw 深度对比', '角度4：树莓派/香橙派运行实测'],
+                    benefits: ['技术深度：吸引开发者', '实用性强：低成本方案', '差异化：与OpenClaw形成对比']
+                },
+                tags: ['#ZeroClaw', '#开源', '#边缘计算', '#Rust', '#本地部署'],
+                createdAt: '2026-03-05T10:00:00Z',
+                updatedAt: '2026-03-05T10:00:00Z'
+            },
+            {
+                id: 'topic_006',
+                title: 'VideoLingo: 16K星的AI自动字幕工具',
+                type: 'deep',
+                priority: 'medium',
+                reason: '16,085星极高热度；一键生成高质量字幕；创作者必备工具',
+                content: {
+                    highlights: ['热度：16,085 ⭐', '功能：AI自动生成视频字幕', '特点：高精度转录、多语言支持', '适用：YouTube、抖音、B站视频'],
+                    techniques: ['角度1：免费字幕工具实测', '角度2：对比剪映/必剪字幕功能', '角度3：批量处理教程'],
+                    benefits: ['实用性强：创作者刚需', '教程价值：工具使用指南', '收藏率高：反复查看']
+                },
+                tags: ['#VideoLingo', '#字幕', '#AI工具'],
+                createdAt: '2026-02-28T10:00:00Z',
+                updatedAt: '2026-02-28T10:00:00Z'
+            },
+            {
+                id: 'topic_007',
+                title: 'YumCut: 免费AI短视频生成器',
+                type: 'hot',
+                priority: 'medium',
+                reason: '1,028星热度上升中；一句话生成TikTok/Reels/Shorts；免费工具',
+                content: {
+                    highlights: ['热度：1,028 ⭐', '功能：一句话生成短视频', '特点：自动脚本、配音、字幕、翻译', '平台：TikTok、Reels、YouTube Shorts'],
+                    techniques: ['角度1：免费AI生成短视频实测', '角度2：vs 其他AI视频工具对比', '角度3：变现思路分享'],
+                    benefits: ['热点性：AI视频生成热门', '实用性：短视频创作工具', '话题性：免费工具吸引关注']
+                },
+                tags: ['#YumCut', '#AI视频', '#短视频'],
+                createdAt: '2026-02-27T10:00:00Z',
+                updatedAt: '2026-02-27T10:00:00Z'
+            },
+            {
+                id: 'topic_008',
+                title: 'JJYB_AI 智剪：智能视频剪辑工具',
+                type: 'deep',
+                priority: 'medium',
+                reason: '613星；国产AI剪辑工具；智能剪辑+AI解说+离线TTS+混剪+配音；回应用户需求',
+                content: {
+                    highlights: ['热度：613 ⭐', '功能：智能剪辑+AI解说+离线TTS+混剪+配音', '特点：国产开源、可本地部署', '适用：口播剪辑、切片、混剪'],
+                    techniques: ['角度1：国产AI剪辑工具实测', '角度2：vs 剪映 AI功能对比', '角度3：口播视频剪辑效率提升'],
+                    benefits: ['实用性：剪辑工具刚需', '差异化：国产开源方案', '教程价值：使用指南']
+                },
+                tags: ['#JJYB_AI', '#智剪', '#AI剪辑', '#国产'],
+                createdAt: '2026-02-26T10:00:00Z',
+                updatedAt: '2026-02-26T10:00:00Z'
+            }
+        ];
+
+        const STORAGE_KEY = 'content_topics';
+
+        function loadTopics() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                return JSON.parse(stored);
+            } else {
+                saveTopics(initialTopics);
+                return initialTopics;
+            }
+        }
+
+        function saveTopics(topics) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(topics));
+        }
+
+        function calculateScore(topic) {
+            let score = 0;
+            const priorityScores = { high: 40, medium: 25, low: 10 };
+            score += priorityScores[topic.priority] || 0;
+            const typeScores = { hot: 30, problem: 25, deep: 20 };
+            score += typeScores[topic.type] || 0;
+            const createdDate = new Date(topic.createdAt);
+            const now = new Date();
+            const daysDiff = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+            if (daysDiff <= 3) score += 20;
+            else if (daysDiff <= 7) score += 10;
+            let completeness = 0;
+            if (topic.title) completeness += 2;
+            if (topic.reason && topic.reason.length >= 10) completeness += 2;
+            if (topic.content.highlights && topic.content.highlights.length > 0) completeness += 2;
+            if (topic.content.techniques && topic.content.techniques.length > 0) completeness += 2;
+            if (topic.content.benefits && topic.content.benefits.length > 0) completeness += 2;
+            score += completeness;
+            return Math.round(score);
+        }
+
+        function renderTopics(topics) {
+            const listContainer = document.getElementById('topics-list');
+            const emptyState = document.getElementById('empty-state');
+            if (topics.length === 0) {
+                listContainer.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            emptyState.style.display = 'none';
+            listContainer.innerHTML = topics.map(topic => {
+                const score = calculateScore(topic);
+                const typeClass = `type-${topic.type}`;
+                const priorityClass = `priority-${topic.priority}`;
+                const typeLabels = { problem: '问题解决型', hot: '热点结合型', deep: '深度教程型' };
+                const priorityLabels = { high: '高', medium: '中', low: '低' };
+                return `
+                    <div class="topic-card">
+                        <div class="topic-header">
+                            <div>
+                                <h2 class="topic-title">${topic.title}</h2>
+                                <div class="topic-meta">
+                                    <span class="topic-type ${typeClass}">${typeLabels[topic.type]}</span>
+                                    <span class="priority ${priorityClass}">优先级: ${priorityLabels[topic.priority]}</span>
+                                    <span class="score-badge">推荐分数: ${score}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="topic-reason">${topic.reason}</div>
+                        <div class="topic-details" id="details-${topic.id}">
+                            ${topic.content.highlights && topic.content.highlights.length > 0 ? `
+                                <div class="detail-section">
+                                    <div class="detail-title">📌 内容亮点</div>
+                                    <div class="detail-content"><ul>${topic.content.highlights.map(h => `<li>${h}</li>`).join('')}</ul></div>
+                                </div>
+                            ` : ''}
+                            ${topic.content.techniques && topic.content.techniques.length > 0 ? `
+                                <div class="detail-section">
+                                    <div class="detail-title">🎬 制作技巧</div>
+                                    <div class="detail-content"><ul>${topic.content.techniques.map(t => `<li>${t}</li>`).join('')}</ul></div>
+                                </div>
+                            ` : ''}
+                            ${topic.content.benefits && topic.content.benefits.length > 0 ? `
+                                <div class="detail-section">
+                                    <div class="detail-title">📈 预期收益</div>
+                                    <div class="detail-content"><ul>${topic.content.benefits.map(b => `<li>${b}</li>`).join('')}</ul></div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        ${topic.tags && topic.tags.length > 0 ? `
+                            <div class="topic-tags">${topic.tags.map(tag => `<span class="topic-tag">${tag}</span>`).join('')}</div>
+                        ` : ''}
+                        <div class="card-actions">
+                            <button class="btn btn-secondary" onclick="toggleDetails('${topic.id}')">展开详情</button>
+                            <button class="btn btn-primary" onclick="editTopic('${topic.id}')">编辑</button>
+                            <button class="btn btn-danger" onclick="deleteTopic('${topic.id}')">删除</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats(topics) {
+            document.getElementById('stat-total').textContent = topics.length;
+            document.getElementById('stat-problem').textContent = topics.filter(t => t.type === 'problem').length;
+            document.getElementById('stat-hot').textContent = topics.filter(t => t.type === 'hot').length;
+            document.getElementById('stat-deep').textContent = topics.filter(t => t.type === 'deep').length;
+        }
+
+        function filterAndSearchTopics() {
+            let topics = loadTopics();
+            const filterType = document.getElementById('filter-type').value;
+            if (filterType !== 'all') topics = topics.filter(t => t.type === filterType);
+            const filterPriority = document.getElementById('filter-priority').value;
+            if (filterPriority !== 'all') topics = topics.filter(t => t.priority === filterPriority);
+            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            if (searchQuery) {
+                topics = topics.filter(t => {
+                    const titleMatch = t.title.toLowerCase().includes(searchQuery);
+                    const tagsMatch = t.tags && t.tags.some(tag => tag.toLowerCase().includes(searchQuery));
+                    return titleMatch || tagsMatch;
+                });
+            }
+            const sortBy = document.getElementById('filter-sort').value;
+            topics.forEach(t => t.score = calculateScore(t));
+            if (sortBy === 'score') topics.sort((a, b) => b.score - a.score);
+            else if (sortBy === 'created') topics.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            else if (sortBy === 'priority') {
+                const priorityOrder = { high: 3, medium: 2, low: 1 };
+                topics.sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]);
+            }
+            renderTopics(topics);
+            updateStats(loadTopics());
+        }
+
+        function toggleDetails(topicId) {
+            const details = document.getElementById(`details-${topicId}`);
+            const button = event.target;
+            if (details.classList.contains('show')) {
+                details.classList.remove('show');
+                button.textContent = '展开详情';
+            } else {
+                details.classList.add('show');
+                button.textContent = '收起详情';
+            }
+        }
+
+        function openModal(title = '添加选题', topicId = null) {
+            const modal = document.getElementById('topic-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const form = document.getElementById('topic-form');
+            modalTitle.textContent = title;
+            form.reset();
+            document.getElementById('topic-id').value = topicId || '';
+            if (topicId) {
+                const topics = loadTopics();
+                const topic = topics.find(t => t.id === topicId);
+                if (topic) {
+                    document.getElementById('topic-title').value = topic.title;
+                    document.getElementById('topic-type').value = topic.type;
+                    document.getElementById('topic-priority').value = topic.priority;
+                    document.getElementById('topic-reason').value = topic.reason;
+                    document.getElementById('topic-highlights').value = topic.content.highlights ? topic.content.highlights.join('\n') : '';
+                    document.getElementById('topic-techniques').value = topic.content.techniques ? topic.content.techniques.join('\n') : '';
+                    document.getElementById('topic-benefits').value = topic.content.benefits ? topic.content.benefits.join('\n') : '';
+                    document.getElementById('topic-tags').value = topic.tags ? topic.tags.join(', ') : '';
+                }
+            }
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('topic-modal').classList.remove('show');
+        }
+
+        function addTopic() {
+            openModal('添加选题');
+        }
+
+        function editTopic(topicId) {
+            openModal('编辑选题', topicId);
+        }
+
+        function deleteTopic(topicId) {
+            if (confirm('确定要删除这个选题吗？')) {
+                let topics = loadTopics();
+                topics = topics.filter(t => t.id !== topicId);
+                saveTopics(topics);
+                filterAndSearchTopics();
+            }
+        }
+
+        function saveTopic(event) {
+            event.preventDefault();
+            const topicId = document.getElementById('topic-id').value;
+            const title = document.getElementById('topic-title').value.trim();
+            const type = document.getElementById('topic-type').value;
+            const priority = document.getElementById('topic-priority').value;
+            const reason = document.getElementById('topic-reason').value.trim();
+            const highlights = document.getElementById('topic-highlights').value.trim().split('\n').filter(h => h.trim());
+            const techniques = document.getElementById('topic-techniques').value.trim().split('\n').filter(t => t.trim());
+            const benefits = document.getElementById('topic-benefits').value.trim().split('\n').filter(b => b.trim());
+            const tags = document.getElementById('topic-tags').value.trim().split(',').map(t => t.trim()).filter(t => t);
+            let topics = loadTopics();
+            if (topicId) {
+                const index = topics.findIndex(t => t.id === topicId);
+                if (index !== -1) {
+                    topics[index] = {
+                        ...topics[index],
+                        title, type, priority, reason,
+                        content: { highlights, techniques, benefits },
+                        tags,
+                        updatedAt: new Date().toISOString()
+                    };
+                }
+            } else {
+                const newTopic = {
+                    id: `topic_${Date.now()}`,
+                    title, type, priority, reason,
+                    content: { highlights, techniques, benefits },
+                    tags,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                topics.push(newTopic);
+            }
+            saveTopics(topics);
+            closeModal();
+            filterAndSearchTopics();
+        }
+
+        function init() {
+            filterAndSearchTopics();
+            document.getElementById('filter-type').addEventListener('change', filterAndSearchTopics);
+            document.getElementById('filter-priority').addEventListener('change', filterAndSearchTopics);
+            document.getElementById('filter-sort').addEventListener('change', filterAndSearchTopics);
+            document.getElementById('search-input').addEventListener('input', debounce(filterAndSearchTopics, 300));
+            document.getElementById('add-btn').addEventListener('click', addTopic);
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+            document.getElementById('cancel-btn').addEventListener('click', closeModal);
+            document.getElementById('topic-form').addEventListener('submit', saveTopic);
+            document.getElementById('topic-modal').addEventListener('click', (e) => {
+                if (e.target.id === 'topic-modal') closeModal();
+            });
+            window.addEventListener('storage', (e) => {
+                if (e.key === STORAGE_KEY) filterAndSearchTopics();
+            });
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
