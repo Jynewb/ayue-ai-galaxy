@@ -588,19 +588,15 @@
         const STORAGE_KEY = 'content_topics';
 
         function loadTopics() {
+            // 强制重新加载初始数据（临时修复）
             const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                const topics = JSON.parse(stored);
-                // 如果localStorage中的选题少于初始选题，重新加载初始数据
-                if (topics.length < initialTopics.length) {
-                    saveTopics(initialTopics);
-                    return initialTopics;
-                }
-                return topics;
-            } else {
+            const forceReload = !stored || JSON.parse(stored).length < 7;
+
+            if (forceReload) {
                 saveTopics(initialTopics);
                 return initialTopics;
             }
+            return JSON.parse(stored);
         }
 
         function saveTopics(topics) {
