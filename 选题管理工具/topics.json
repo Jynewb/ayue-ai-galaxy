@@ -1,0 +1,102 @@
+{
+  "topics": [
+    {
+      "id": "topic_001",
+      "title": "OpenClaw安装全问题合集",
+      "type": "problem",
+      "priority": "high",
+      "reason": "从账号的私信和群聊可见，用户安装问题极多；延续置顶爆款热度；直接回应用户反馈",
+      "content": {
+        "highlights": ["真实问题：从群聊中提取真实用户提问", "分类解答：环境配置、网络连接、模型加载等", "互动设计：视频中设置问题编号"],
+        "techniques": ["快节奏剪辑：每个问题15-30秒", "视觉化呈现：错误截图对比", "资源打包：提供问题解决checklist"],
+        "benefits": ["完播率高：用户会看到底", "收藏率高：作为工具书", "引流好：新用户会搜到"]
+      },
+      "tags": ["#OpenClaw", "#安装问题"],
+      "createdAt": "2026-03-01T10:00:00Z"
+    },
+    {
+      "id": "topic_002",
+      "title": "OpenClaw 3.1更新了什么",
+      "type": "hot",
+      "priority": "high",
+      "reason": "25.2万星登顶GitHub历史第一；新功能多；有热度",
+      "content": {
+        "highlights": ["Apple Watch联动", "WebSocket实时流", "Claude 4.6自适应思考", "25.2万星登顶"],
+        "techniques": ["角度1：从25万星切入", "角度2：实测速度", "角度3：Apple Watch演示"],
+        "benefits": ["蹭热点流量", "完播率高", "收藏率高"]
+      },
+      "tags": ["#OpenClaw", "#3.1更新"],
+      "createdAt": "2026-03-02T10:00:00Z"
+    },
+    {
+      "id": "topic_003",
+      "title": "DeepSeek V4 发布！编程能力超越Claude？",
+      "type": "hot",
+      "priority": "high",
+      "reason": "下周发布，全网热议；编程能力超越Claude；1万亿参数+100万上下文",
+      "content": {
+        "highlights": ["发布时间：下周", "参数：1万亿", "上下文：100万Token", "类型：原生多模态"],
+        "techniques": ["编程实测对比", "技术解读", "国产之光", "应用场景"],
+        "benefits": ["蹭热点流量", "话题性强", "收藏率高"]
+      },
+      "tags": ["#DeepSeek", "#V4", "#国产AI"],
+      "createdAt": "2026-03-03T10:00:00Z"
+    },
+    {
+      "id": "topic_005",
+      "title": "ZeroClaw: 23K星的开源AI基础设施",
+      "type": "deep",
+      "priority": "high",
+      "reason": "23,523星热度飙升；极简Rust实现；$10硬件运行；符合免费+本地爆款公式",
+      "content": {
+        "highlights": ["内存<5MB", "启动<10ms", "硬件$10", "100% Rust"],
+        "techniques": ["$10硬件运行", "安装教程", "vs OpenClaw对比"],
+        "benefits": ["技术深度", "实用性", "差异化"]
+      },
+      "tags": ["#ZeroClaw", "#开源", "#本地部署"],
+      "createdAt": "2026-03-05T10:00:00Z"
+    },
+    {
+      "id": "topic_006",
+      "title": "VideoLingo: 16K星的AI自动字幕工具",
+      "type": "deep",
+      "priority": "medium",
+      "reason": "16,085星极高热度；一键生成高质量字幕",
+      "content": {
+        "highlights": ["热度16,085星", "AI自动字幕", "高精度转录"],
+        "techniques": ["免费字幕实测", "对比剪映", "批量处理"],
+        "benefits": ["实用性", "教程价值"]
+      },
+      "tags": ["#VideoLingo", "#字幕"],
+      "createdAt": "2026-02-28T10:00:00Z"
+    },
+    {
+      "id": "topic_007",
+      "title": "YumCut: 免费AI短视频生成器",
+      "type": "hot",
+      "priority": "medium",
+      "reason": "1,028星热度上升；一句话生成短视频；免费工具",
+      "content": {
+        "highlights": ["热度1,028星", "一句话生成", "多平台支持"],
+        "techniques": ["实测", "对比", "变现思路"],
+        "benefits": ["热点性", "实用性"]
+      },
+      "tags": ["#YumCut", "#AI视频"],
+      "createdAt": "2026-02-27T10:00:00Z"
+    },
+    {
+      "id": "topic_008",
+      "title": "JJYB_AI 智剪：智能视频剪辑工具",
+      "type": "deep",
+      "priority": "medium",
+      "reason": "613星；国产AI剪辑；智能剪辑+AI解说+离线TTS",
+      "content": {
+        "highlights": ["热度613星", "国产开源", "多功能集成"],
+        "techniques": ["实测", "对比剪映", "效率提升"],
+        "benefits": ["实用性", "差异化"]
+      },
+      "tags": ["#JJYB_AI", "#智剪", "#国产"],
+      "createdAt": "2026-02-26T10:00:00Z"
+    }
+  ]
+}
